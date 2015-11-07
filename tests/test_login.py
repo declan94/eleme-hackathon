@@ -39,4 +39,4 @@ def test_login_post_data(url, username, password):
 
     assert res.status_code == 400
     assert res.json().get("code") == "MALFORMED_JSON"
-    assert res.json().get("message") == "格式错误"
+    assert res.json().get("message") == u"格式错误"

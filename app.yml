@@ -1,0 +1,6 @@
+language: py2
+script:
+  - apt-get install libmysqlclient-dev -y
+  - pip install -r py/requirements.txt
+  - python py/create_db.py
+  - python py/server.py

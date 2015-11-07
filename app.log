@@ -1,0 +1,545 @@
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+[I 151106 17:33:50 server:271] Serving on http://127.0.0.1:5500
+[I 151106 17:33:50 handlers:58] Start watching changes
+[I 151106 17:33:50 handlers:60] Start detecting changes
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Collecting flask (from -r py/requirements.txt (line 1))
+/srv/virtualenvs/py2/local/lib/python2.7/site-packages/pip/_vendor/requests/packages/urllib3/util/ssl_.py:90: InsecurePlatformWarning: A true SSLContext object is not available. This prevents urllib3 from configuring SSL appropriately and may cause certain SSL connections to fail. For more information, see https://urllib3.readthedocs.org/en/latest/security.html#insecureplatformwarning.
+  InsecurePlatformWarning
+  Downloading Flask-0.10.1.tar.gz (544kB)
+Collecting Werkzeug>=0.7 (from flask->-r py/requirements.txt (line 1))
+  Downloading Werkzeug-0.10.4-py2.py3-none-any.whl (293kB)
+Collecting Jinja2>=2.4 (from flask->-r py/requirements.txt (line 1))
+  Downloading Jinja2-2.8-py2.py3-none-any.whl (263kB)
+Collecting itsdangerous>=0.21 (from flask->-r py/requirements.txt (line 1))
+  Downloading itsdangerous-0.24.tar.gz (46kB)
+Collecting MarkupSafe (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+  Downloading MarkupSafe-0.23.tar.gz
+Building wheels for collected packages: flask, itsdangerous, MarkupSafe
+  Running setup.py bdist_wheel for flask
+  Stored in directory: /root/.cache/pip/wheels/d2/db/61/cb9b80526b8f3ba89248ec0a29d6da1bb6013681c930fca987
+  Running setup.py bdist_wheel for itsdangerous
+  Stored in directory: /root/.cache/pip/wheels/97/c0/b8/b37c320ff57e15f993ba0ac98013eee778920b4a7b3ebae3cf
+  Running setup.py bdist_wheel for MarkupSafe
+  Stored in directory: /root/.cache/pip/wheels/94/a7/79/f79a998b64c1281cb99fa9bbd33cfc9b8b5775f438218d17a7
+Successfully built flask itsdangerous MarkupSafe
+Installing collected packages: Werkzeug, MarkupSafe, Jinja2, itsdangerous, flask
+Successfully installed Jinja2-2.8 MarkupSafe-0.23 Werkzeug-0.10.4 flask-0.10.1 itsdangerous-0.24
+/srv/virtualenvs/py2/local/lib/python2.7/site-packages/pip/_vendor/requests/packages/urllib3/util/ssl_.py:90: InsecurePlatformWarning: A true SSLContext object is not available. This prevents urllib3 from configuring SSL appropriately and may cause certain SSL connections to fail. For more information, see https://urllib3.readthedocs.org/en/latest/security.html#insecureplatformwarning.
+  InsecurePlatformWarning
+INFO:hackathon.launcher:execute script: python py/app.py
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+10.0.2.2 - - [06/Nov/2015 17:46:03] "GET / HTTP/1.1" 200 -
+10.0.2.2 - - [06/Nov/2015 17:46:03] "GET /favicon.ico HTTP/1.1" 404 -
+[I 151106 17:58:19 hackathon-appreload:13] app restarting...
+[I 151106 17:58:19 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/app.py
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/app.py
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+10.0.2.2 - - [06/Nov/2015 18:06:15] "GET / HTTP/1.1" 200 -
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/app.py
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/app.py
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+10.0.2.2 - - [06/Nov/2015 18:07:39] "GET / HTTP/1.1" 200 -
+10.0.2.2 - - [06/Nov/2015 18:07:53] "GET / HTTP/1.1" 200 -
+[I 151106 18:09:19 hackathon-appreload:13] app restarting...
+[I 151106 18:09:19 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python server.py
+[I 151106 18:09:20 hackathon-appreload:13] app restarting...
+[I 151106 18:09:20 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python server.py
+Traceback (most recent call last):
+  File "server.py", line 10, in <module>
+    @app.route('/')
+  File "/srv/virtualenvs/py2/local/lib/python2.7/site-packages/flask/app.py", line 1013, in decorator
+    self.add_url_rule(rule, endpoint, f, **options)
+  File "/srv/virtualenvs/py2/local/lib/python2.7/site-packages/flask/app.py", line 62, in wrapper_func
+    return f(self, *args, **kwargs)
+  File "/srv/virtualenvs/py2/local/lib/python2.7/site-packages/flask/app.py", line 984, in add_url_rule
+    'existing endpoint function: %s' % endpoint)
+AssertionError: View function mapping is overwriting an existing endpoint function: hello_world
+[I 151106 18:09:22 hackathon-appreload:13] app restarting...
+[I 151106 18:09:22 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python server.py
+Traceback (most recent call last):
+  File "server.py", line 10, in <module>
+    @app.route('/')
+  File "/srv/virtualenvs/py2/local/lib/python2.7/site-packages/flask/app.py", line 1013, in decorator
+    self.add_url_rule(rule, endpoint, f, **options)
+  File "/srv/virtualenvs/py2/local/lib/python2.7/site-packages/flask/app.py", line 62, in wrapper_func
+    return f(self, *args, **kwargs)
+  File "/srv/virtualenvs/py2/local/lib/python2.7/site-packages/flask/app.py", line 984, in add_url_rule
+    'existing endpoint function: %s' % endpoint)
+AssertionError: View function mapping is overwriting an existing endpoint function: hello_world
+[I 151106 18:09:23 hackathon-appreload:13] app restarting...
+[I 151106 18:09:23 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python server.py
+Traceback (most recent call last):
+  File "server.py", line 10, in <module>
+    @app.route('/')
+  File "/srv/virtualenvs/py2/local/lib/python2.7/site-packages/flask/app.py", line 1013, in decorator
+    self.add_url_rule(rule, endpoint, f, **options)
+  File "/srv/virtualenvs/py2/local/lib/python2.7/site-packages/flask/app.py", line 62, in wrapper_func
+    return f(self, *args, **kwargs)
+  File "/srv/virtualenvs/py2/local/lib/python2.7/site-packages/flask/app.py", line 984, in add_url_rule
+    'existing endpoint function: %s' % endpoint)
+AssertionError: View function mapping is overwriting an existing endpoint function: hello_world
+[I 151106 18:11:08 hackathon-appreload:13] app restarting...
+[I 151106 18:11:08 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python server.py
+[I 151106 18:11:45 hackathon-appreload:13] app restarting...
+[I 151106 18:11:45 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/app.py
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+[I 151106 18:12:04 hackathon-appreload:13] app restarting...
+[I 151106 18:12:04 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/app.py
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/app.py
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+10.0.2.2 - - [06/Nov/2015 18:12:24] "GET / HTTP/1.1" 200 -
+10.0.2.2 - - [06/Nov/2015 18:12:24] "GET /favicon.ico HTTP/1.1" 404 -
+[I 151106 18:16:21 hackathon-appreload:13] app restarting...
+[I 151106 18:16:21 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/app.py
+Traceback (most recent call last):
+  File "py/app.py", line 7, in <module>
+    from flask.ext.sqlalchemy import SQLAlchemy
+  File "/srv/virtualenvs/py2/local/lib/python2.7/site-packages/flask/exthook.py", line 87, in load_module
+    raise ImportError('No module named %s' % fullname)
+ImportError: No module named flask.ext.sqlalchemy
+[I 151106 18:16:26 hackathon-appreload:13] app restarting...
+[I 151106 18:16:26 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/app.py
+Traceback (most recent call last):
+  File "py/app.py", line 7, in <module>
+    from flask.ext.sqlalchemy import SQLAlchemy
+  File "/srv/virtualenvs/py2/local/lib/python2.7/site-packages/flask/exthook.py", line 87, in load_module
+    raise ImportError('No module named %s' % fullname)
+ImportError: No module named flask.ext.sqlalchemy
+[I 151106 18:16:30 hackathon-appreload:13] app restarting...
+[I 151106 18:16:30 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/app.py
+Traceback (most recent call last):
+  File "py/app.py", line 7, in <module>
+    from flask.ext.sqlalchemy import SQLAlchemy
+  File "/srv/virtualenvs/py2/local/lib/python2.7/site-packages/flask/exthook.py", line 87, in load_module
+    raise ImportError('No module named %s' % fullname)
+ImportError: No module named flask.ext.sqlalchemy
+[I 151106 18:16:37 hackathon-appreload:13] app restarting...
+[I 151106 18:16:37 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/app.py
+Traceback (most recent call last):
+  File "py/app.py", line 7, in <module>
+    from flask.ext.sqlalchemy import SQLAlchemy
+  File "/srv/virtualenvs/py2/local/lib/python2.7/site-packages/flask/exthook.py", line 87, in load_module
+    raise ImportError('No module named %s' % fullname)
+ImportError: No module named flask.ext.sqlalchemy
+[I 151106 18:16:42 hackathon-appreload:13] app restarting...
+[I 151106 18:16:42 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/app.py
+Traceback (most recent call last):
+  File "py/app.py", line 7, in <module>
+    from flask.ext.sqlalchemy import SQLAlchemy
+  File "/srv/virtualenvs/py2/local/lib/python2.7/site-packages/flask/exthook.py", line 87, in load_module
+    raise ImportError('No module named %s' % fullname)
+ImportError: No module named flask.ext.sqlalchemy
+[I 151106 18:16:46 hackathon-appreload:13] app restarting...
+[I 151106 18:16:46 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/app.py
+Traceback (most recent call last):
+  File "py/app.py", line 7, in <module>
+    from flask.ext.sqlalchemy import SQLAlchemy
+  File "/srv/virtualenvs/py2/local/lib/python2.7/site-packages/flask/exthook.py", line 87, in load_module
+    raise ImportError('No module named %s' % fullname)
+ImportError: No module named flask.ext.sqlalchemy
+[I 151106 20:11:36 hackathon-appreload:13] app restarting...
+[I 151106 20:11:36 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/app.py
+Traceback (most recent call last):
+  File "py/app.py", line 7, in <module>
+    from flask.ext.sqlalchemy import SQLAlchemy
+  File "/srv/virtualenvs/py2/local/lib/python2.7/site-packages/flask/exthook.py", line 87, in load_module
+    raise ImportError('No module named %s' % fullname)
+ImportError: No module named flask.ext.sqlalchemy
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/app.py
+Traceback (most recent call last):
+  File "py/app.py", line 7, in <module>
+    from flask.ext.sqlalchemy import SQLAlchemy
+  File "/srv/virtualenvs/py2/local/lib/python2.7/site-packages/flask/exthook.py", line 87, in load_module
+    raise ImportError('No module named %s' % fullname)
+ImportError: No module named flask.ext.sqlalchemy
+[I 151106 20:13:57 hackathon-appreload:13] app restarting...
+[I 151106 20:13:57 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Could not open requirements file: [Errno 2] No such file or directory: 'py/requirements.txt'
+INFO:hackathon.launcher:execute script: python app.py
+Traceback (most recent call last):
+  File "app.py", line 7, in <module>
+    from flask.ext.sqlalchemy import SQLAlchemy
+  File "/srv/virtualenvs/py2/local/lib/python2.7/site-packages/flask/exthook.py", line 87, in load_module
+    raise ImportError('No module named %s' % fullname)
+ImportError: No module named flask.ext.sqlalchemy
+[I 151106 20:14:02 hackathon-appreload:13] app restarting...
+[I 151106 20:14:02 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Could not open requirements file: [Errno 2] No such file or directory: 'py/requirements.txt'
+INFO:hackathon.launcher:execute script: python server.py
+python: can't open file 'server.py': [Errno 2] No such file or directory
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Could not open requirements file: [Errno 2] No such file or directory: 'py/requirements.txt'
+INFO:hackathon.launcher:execute script: python server.py
+Traceback (most recent call last):
+  File "server.py", line 5, in <module>
+    from app import app
+  File "/vagrant/app/__init__.py", line 5, in <module>
+    from flask.ext.sqlalchemy import SQLAlchemy
+  File "/srv/virtualenvs/py2/local/lib/python2.7/site-packages/flask/exthook.py", line 87, in load_module
+    raise ImportError('No module named %s' % fullname)
+ImportError: No module named flask.ext.sqlalchemy
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Could not open requirements file: [Errno 2] No such file or directory: 'py/requirements.txt'
+INFO:hackathon.launcher:execute script: python server.py
+Traceback (most recent call last):
+  File "server.py", line 5, in <module>
+    from app import app
+  File "/vagrant/app/__init__.py", line 5, in <module>
+    from flask.ext.sqlalchemy import SQLAlchemy
+  File "/srv/virtualenvs/py2/local/lib/python2.7/site-packages/flask/exthook.py", line 87, in load_module
+    raise ImportError('No module named %s' % fullname)
+ImportError: No module named flask.ext.sqlalchemy
+[I 151106 20:17:39 server:271] Serving on http://127.0.0.1:5500
+[I 151106 20:17:39 handlers:58] Start watching changes
+[I 151106 20:17:39 handlers:60] Start detecting changes
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Could not open requirements file: [Errno 2] No such file or directory: 'py/requirements.txt'
+INFO:hackathon.launcher:execute script: python server.py
+Traceback (most recent call last):
+  File "server.py", line 5, in <module>
+    from app import app
+  File "/vagrant/app/__init__.py", line 5, in <module>
+    from flask.ext.sqlalchemy import SQLAlchemy
+  File "/srv/virtualenvs/py2/local/lib/python2.7/site-packages/flask/exthook.py", line 87, in load_module
+    raise ImportError('No module named %s' % fullname)
+ImportError: No module named flask.ext.sqlalchemy
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Could not open requirements file: [Errno 2] No such file or directory: 'py/requirements.txt'
+INFO:hackathon.launcher:execute script: python server.py
+Traceback (most recent call last):
+  File "server.py", line 5, in <module>
+    from app import app
+  File "/vagrant/app/__init__.py", line 5, in <module>
+    from flask.ext.sqlalchemy import SQLAlchemy
+  File "/srv/virtualenvs/py2/local/lib/python2.7/site-packages/flask/exthook.py", line 87, in load_module
+    raise ImportError('No module named %s' % fullname)
+ImportError: No module named flask.ext.sqlalchemy
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Could not open requirements file: [Errno 2] No such file or directory: 'py/requirements.txt'
+INFO:hackathon.launcher:execute script: python server.py
+Traceback (most recent call last):
+  File "server.py", line 5, in <module>
+    from app import app
+  File "/vagrant/app/__init__.py", line 5, in <module>
+    from flask.ext.sqlalchemy import SQLAlchemy
+  File "/srv/virtualenvs/py2/local/lib/python2.7/site-packages/flask/exthook.py", line 87, in load_module
+    raise ImportError('No module named %s' % fullname)
+ImportError: No module named flask.ext.sqlalchemy
+[I 151106 20:18:08 server:271] Serving on http://127.0.0.1:5500
+[I 151106 20:18:08 handlers:58] Start watching changes
+[I 151106 20:18:08 handlers:60] Start detecting changes
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Could not open requirements file: [Errno 2] No such file or directory: 'py/requirements.txt'
+INFO:hackathon.launcher:execute script: python server.py
+Traceback (most recent call last):
+  File "server.py", line 5, in <module>
+    from app import app
+  File "/vagrant/app/__init__.py", line 5, in <module>
+    from flask.ext.sqlalchemy import SQLAlchemy
+  File "/srv/virtualenvs/py2/local/lib/python2.7/site-packages/flask/exthook.py", line 87, in load_module
+    raise ImportError('No module named %s' % fullname)
+ImportError: No module named flask.ext.sqlalchemy
+[I 151106 20:18:36 hackathon-appreload:13] app restarting...
+[I 151106 20:18:36 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r app/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r app/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r app/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r app/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r app/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r app/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python server.py
+Traceback (most recent call last):
+  File "server.py", line 5, in <module>
+    from app import app
+  File "/vagrant/app/__init__.py", line 5, in <module>
+    from flask.ext.sqlalchemy import SQLAlchemy
+  File "/srv/virtualenvs/py2/local/lib/python2.7/site-packages/flask/exthook.py", line 87, in load_module
+    raise ImportError('No module named %s' % fullname)
+ImportError: No module named flask.ext.sqlalchemy
+[I 151106 20:19:29 hackathon-appreload:13] app restarting...
+[I 151106 20:19:29 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python server.py
+python: can't open file 'server.py': [Errno 2] No such file or directory
+[I 151106 20:19:32 hackathon-appreload:13] app restarting...
+[I 151106 20:19:32 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/server.py
+Traceback (most recent call last):
+  File "py/server.py", line 5, in <module>
+    from app import app
+  File "/vagrant/py/app/__init__.py", line 5, in <module>
+    from flask.ext.sqlalchemy import SQLAlchemy
+  File "/srv/virtualenvs/py2/local/lib/python2.7/site-packages/flask/exthook.py", line 87, in load_module
+    raise ImportError('No module named %s' % fullname)
+ImportError: No module named flask.ext.sqlalchemy
+[I 151106 20:19:36 hackathon-appreload:13] app restarting...
+[I 151106 20:19:36 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/server.py
+Traceback (most recent call last):
+  File "py/server.py", line 5, in <module>
+    from app import app
+  File "/vagrant/py/app/__init__.py", line 5, in <module>
+    from flask.ext.sqlalchemy import SQLAlchemy
+  File "/srv/virtualenvs/py2/local/lib/python2.7/site-packages/flask/exthook.py", line 87, in load_module
+    raise ImportError('No module named %s' % fullname)
+ImportError: No module named flask.ext.sqlalchemy
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/server.py
+Traceback (most recent call last):
+  File "py/server.py", line 5, in <module>
+    from app import app
+  File "/vagrant/py/app/__init__.py", line 5, in <module>
+    from flask.ext.sqlalchemy import SQLAlchemy
+  File "/srv/virtualenvs/py2/local/lib/python2.7/site-packages/flask/exthook.py", line 87, in load_module
+    raise ImportError('No module named %s' % fullname)
+ImportError: No module named flask.ext.sqlalchemy
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/server.py
+Traceback (most recent call last):
+  File "py/server.py", line 5, in <module>
+    from app import app
+  File "/vagrant/py/app/__init__.py", line 5, in <module>
+    from flask.ext.sqlalchemy import SQLAlchemy
+  File "/srv/virtualenvs/py2/local/lib/python2.7/site-packages/flask/exthook.py", line 87, in load_module
+    raise ImportError('No module named %s' % fullname)
+ImportError: No module named flask.ext.sqlalchemy
