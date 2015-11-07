@@ -27,7 +27,7 @@ def my_response(data, status_code = 200, status = "ok"):
 	r = Response()
 	r.status = status
 	r.status_code = status_code
-	if data:
+	if data != None:
 		r.data = json.dumps(data)
 	return r
 
@@ -73,30 +73,33 @@ def authorize():
 
 # food relative #
 
-def get_food(food_id):
-	cached = get_cached_food(food_id)
+def get_food(food_id, use_cache = True):
+	cached = None
+	if use_cache:
+		cached = get_cached_food(food_id)
 	if cached:
 		return cached
-	rows = db.select("select stock, price from `food` where id = %d limit 1" % food_id)
+	rows = db.select("select `stock`, `price` from `food` where id = %d limit 1" % food_id)
 	if not rows or len(rows) == 0:
 		return None
 	else:
-		return rows[0]
+		food = {'id': food_id, 'stock': rows[0][0], 'price': rows[0][1]}
+		cache_food(food)
+		return food
 
 def get_cached_food(food_id):
-	cache_key = "FOOD_" + food_id
+	cache_key = "FOOD_%d" % food_id
 	ct = myr.hget(cache_key, 'cache_time')
-	if not ct or time() - ct > 5:
+	if not ct or time() - float(ct) > 500:
 		return None
 	stock = myr.hget(cache_key, 'stock')
 	price = myr.hget(cache_key, 'price')
-	food = {'id': food_id, 'stock': stock, 'price': price}
-	cache_food(food)
+	food = {'id': food_id, 'stock': int(stock), 'price': int(price)}
 	return food
 
 def cache_food(food):
 	food_id = food['id']
-	cache_key = "FOOD_" + food_id
+	cache_key = "FOOD_%d" % food_id
 	myr.hset(cache_key, 'stock', food['stock'])
 	myr.hset(cache_key, 'price', food['price'])
 	myr.hset(cache_key, 'cache_time', time())
@@ -105,7 +108,7 @@ def cache_food(food):
 
 def cart_new(user_id):
 	cart_id = "%032d" % myr.incr('CART_ID')
-	myr.set("USER_CART_%d_%s" % (user_id, cart_id), 1)
+	myr.set("USER_CART_%d_%s" % (user_id, cart_id), '1')
 	return cart_id
 
 def cart_exists(cart_id):
@@ -115,15 +118,19 @@ def cart_exists(cart_id):
 
 def cart_belongs(cart_id, user_id):
 	key = "USER_CART_%d_%s" %(user_id, cart_id)
-	return  myr.get(key) == 1
+	return  myr.get(key) == '1'
 
 def cart_data(cart_id):
 	data = []
-	arr = myr.smembers("CART_"+cart_id)
-	for i in range(0, len(arr)):
-		food_id = int(arr[i])
-		count = myr.get("COUNT_%s_%d" % (cart_id, food_id))
-		data.append({'food_id': food_id, 'count': count})
+	fid_set = myr.smembers("CART_"+cart_id)
+	for food_id in fid_set:
+		count = myr.get("COUNT_%s_%s" % (cart_id, food_id))
+		if count:
+			count = int(count)
+		else:
+			count = 0
+		data.append({'food_id': int(food_id), 'count': count})
+	return data
 
 def cart_patch(cart_id, food_id, count):
 	myr.sadd("CART_" + cart_id, food_id)
@@ -137,6 +144,26 @@ def cart_patch(cart_id, food_id, count):
 	if c < 0:
 		c = 0
 	myr.set(k, c)
+
+# order relative #
+
+def user_order_id(user_id):
+	return myr.get("ORDER_%d" % user_id)
+
+def set_user_order_id(user_id, order_id):
+	myr.set("ORDER_%d" % user_id, order_id)
+
+def user_order(user_id):
+	order_id = user_order_id(user_id)
+	if not order_id:
+		return None
+	items = cart_data(order_id)
+	total = 0
+	for i in range(0, len(items)):
+		item = items[i]
+		food = get_food(int(item['food_id']))
+		total = total + food['price'] * item['count']
+	return {"id": order_id, "items": items, "total": total}
 
 
 ############### view functions ###############
@@ -152,7 +179,7 @@ def login():
 	r = Response()
 	if rows and len(rows) > 0:
 		user_id = rows[0][0]
-		access_token = "%032d" % user_id
+		access_token = "%d" % user_id
 		myr.set("ACCESS_%s" % access_token, user_id)
 		res_data = {'user_id': user_id, 'username': data['username'], 'access_token': access_token}
 		return my_response(res_data)
@@ -177,7 +204,7 @@ def carts():
 	return my_response({'cart_id': cart_id})
 
 @app.route('/carts/<cart_id>', methods=["PATCH"])
-def patch_carts():
+def patch_carts(cart_id):
 	user_id = authorize()
 	if isinstance(user_id, Response):
 		return user_id
@@ -188,32 +215,81 @@ def patch_carts():
 		return my_response({"code": "CART_NOT_FOUND", "message": "篮子不存在"}, 404, "Not Found")
 	if not cart_belongs(cart_id, user_id):
 		return my_response({"code": "NOT_AUTHORIZED_TO_ACCESS_CART", "message": "无权限访问指定的篮子"}, 401, "Unauthorized")
-	food_id = data['food_id']
+	food_id = int(data['food_id'])
 	count = data['count']
 	food = get_food(food_id)
 	if not food:
 		return my_response({"code": "FOOD_NOT_FOUND", "message": "食物不存在"}, 404, "Not Found")
-	if count > food['stock']:
-		return my_response({"code": "FOOD_OUT_OF_STOCK", "message": "食物库存不足"}, 403, "Forbidden")
-	old = cart_data(cart_id)
+	# if count > food['stock']:
+	# 	return my_response({"code": "FOOD_OUT_OF_STOCK", "message": "食物库存不足"}, 403, "Forbidden")
 	total = count
-	for i in range(0, len(old)):
-		total = total + old[i]['count']
-		if total > 3:
-			return my_response({"code": "FOOD_OUT_OF_LIMIT", "message": "篮子中食物数量超过了三个"}, 403, "Forbidden");
-	cart_add(cart_id, food_id, count)
+	if total > 3:
+		return my_response({"code": "FOOD_OUT_OF_LIMIT", "message": "篮子中食物数量超过了三个"}, 403, "Forbidden");
+	old = cart_data(cart_id)
+	if old:
+		for i in range(0, len(old)):
+			total = total + old[i]['count']
+			if total > 3:
+				return my_response({"code": "FOOD_OUT_OF_LIMIT", "message": "篮子中食物数量超过了三个"}, 403, "Forbidden");
+	if not user_order_id(user_id):
+		cart_patch(cart_id, food_id, count)
 	return my_response(None, 204, "No content")
 
-# @app.route('/orders', methods=["POST"])
-# def orders():
-# 	user_id = authorize()
-# 	if isinstance(user_id, Response):
-# 		return user_id
-# 	data = check_data()
-# 	if isinstance(data, Response):
-# 		return data
-# 	cart_id = data['cart_id']
-	
+@app.route('/orders', methods=["POST"])
+def make_orders():
+	user_id = authorize()
+	if isinstance(user_id, Response):
+		return user_id
+	data = check_data()
+	if isinstance(data, Response):
+		return data
+	cart_id = data['cart_id']
+	if not cart_exists(cart_id):
+		return my_response({"code": "CART_NOT_FOUND", "message": "篮子不存在"}, 404, "Not Found")
+	if not cart_belongs(cart_id, user_id):
+		return my_response({"code": "NOT_AUTHORIZED_TO_ACCESS_CART", "message": "无权限访问指定的篮子"}, 403, "Forbidden")
+	if user_order_id(user_id) != None:
+		return my_response({"code": "ORDER_OUT_OF_LIMIT", "message": "每个用户只能下一单"}, 403, "Forbidden")
+	cart = cart_data(cart_id)
+	db.execute("LOCK TABLE food WRITE")
+	for i in range(0, len(cart)):
+		item = cart[i]
+		food = get_food(item['food_id'], False)
+		if food['stock'] < item['count']:
+			db.execute("UNLOCK TABLE")
+			return my_response({"code": "FOOD_OUT_OF_STOCK", "message": "食物库存不足"}, 403, "Forbidden")
+		item['stock'] = food['stock']
+	for i in range(0, len(cart)):
+		item = cart[i]
+		new_stock = item['stock'] - item['count']
+		db.update("food", {"stock": new_stock}, {"id": item['food_id']})
+	db.execute("UNLOCK TABLE")
+	order_id = cart_id
+	set_user_order_id(user_id, order_id)
+	return my_response({"id": order_id})
+
+@app.route('/orders')
+def get_orders():
+	user_id = authorize()
+	if isinstance(user_id, Response):
+		return user_id
+	order = user_order(user_id)
+	if not order:
+		return my_response([])
+	else:
+		return my_response([order])
+
+@app.route('/admin/orders')
+def all_orders():
+	users = db.select("select id from user")
+	orders = []
+	for i in range(0, len(users)):
+		user_id = users[i][0]
+		order = user_order(user_id)
+		if order:
+			orders.append(order)
+	return my_response(orders)
+
 
 
 if __name__ == '__main__':
