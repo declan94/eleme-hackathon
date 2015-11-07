@@ -543,3 +543,1094 @@ Traceback (most recent call last):
   File "/srv/virtualenvs/py2/local/lib/python2.7/site-packages/flask/exthook.py", line 87, in load_module
     raise ImportError('No module named %s' % fullname)
 ImportError: No module named flask.ext.sqlalchemy
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...[I 151107 13:21:19 server:271] Serving on http://127.0.0.1:5500
+[I 151107 13:21:19 handlers:58] Start watching changes
+[I 151107 13:21:19 handlers:60] Start detecting changes
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Collecting mysql-python (from -r py/requirements.txt (line 2))
+/srv/virtualenvs/py2/local/lib/python2.7/site-packages/pip/_vendor/requests/packages/urllib3/util/ssl_.py:90: InsecurePlatformWarning: A true SSLContext object is not available. This prevents urllib3 from configuring SSL appropriately and may cause certain SSL connections to fail. For more information, see https://urllib3.readthedocs.org/en/latest/security.html#insecureplatformwarning.
+  InsecurePlatformWarning
+  Downloading MySQL-python-1.2.5.zip (108kB)
+Collecting redis (from -r py/requirements.txt (line 3))
+  Downloading redis-2.10.5-py2.py3-none-any.whl (60kB)
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+Building wheels for collected packages: mysql-python
+  Running setup.py bdist_wheel for mysql-python
+  Stored in directory: /root/.cache/pip/wheels/8c/0d/11/d654cad764b92636ce047897dd2b9e1b0cd76c22f813c5851a
+Successfully built mysql-python
+Installing collected packages: mysql-python, redis
+Successfully installed mysql-python-1.2.5 redis-2.10.5
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+ * Restarting with stat
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...[I 151107 23:51:51 server:271] Serving on http://127.0.0.1:5500
+[I 151107 23:51:51 handlers:58] Start watching changes
+[I 151107 23:51:51 handlers:60] Start detecting changes
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+  File "py/server.py", line 76
+    def cache_food(food):
+      ^
+IndentationError: expected an indented block
+[I 151107 23:53:08 hackathon-appreload:13] app restarting...
+[I 151107 23:53:08 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+  File "py/server.py", line 76
+    def cache_food(food):
+      ^
+IndentationError: expected an indented block
+[I 151107 23:54:01 hackathon-appreload:13] app restarting...
+[I 151107 23:54:01 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+[I 151107 23:54:01 hackathon-appreload:13] app restarting...
+[I 151107 23:54:01 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+  File "py/server.py", line 76
+    def cache_food(food):
+      ^
+IndentationError: expected an indented block
+[I 151107 23:54:04 hackathon-appreload:13] app restarting...
+[I 151107 23:54:04 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+  File "py/server.py", line 76
+    def cache_food(food):
+      ^
+IndentationError: expected an indented block
+[I 151107 23:54:14 hackathon-appreload:13] app restarting...
+[I 151107 23:54:14 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+  File "py/server.py", line 76
+    def cache_food(food):
+      ^
+IndentationError: expected an indented block
+[I 151107 23:54:27 hackathon-appreload:13] app restarting...
+[I 151107 23:54:27 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+  File "py/server.py", line 76
+    def cache_food(food):
+      ^
+IndentationError: expected an indented block
+[I 151107 23:54:33 hackathon-appreload:13] app restarting...
+[I 151107 23:54:33 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+  File "py/server.py", line 76
+    def cache_food(food):
+      ^
+IndentationError: expected an indented block
+[I 151107 23:54:41 hackathon-appreload:13] app restarting...
+[I 151107 23:54:41 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+  File "py/server.py", line 76
+    def cache_food(food):
+      ^
+IndentationError: expected an indented block
+[I 151107 23:55:23 hackathon-appreload:13] app restarting...
+[I 151107 23:55:23 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+  File "py/server.py", line 78
+    def cache_food(food):
+      ^
+IndentationError: expected an indented block
+[I 151107 23:55:25 hackathon-appreload:13] app restarting...
+[I 151107 23:55:25 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+  File "py/server.py", line 78
+    def cache_food(food):
+      ^
+IndentationError: expected an indented block
+[I 151107 23:55:29 hackathon-appreload:13] app restarting...
+[I 151107 23:55:29 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+  File "py/server.py", line 78
+    def cache_food(food):
+      ^
+IndentationError: expected an indented block
+[I 151107 23:55:31 hackathon-appreload:13] app restarting...
+[I 151107 23:55:31 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+  File "py/server.py", line 78
+    def cache_food(food):
+      ^
+IndentationError: expected an indented block
+[I 151107 23:55:49 hackathon-appreload:13] app restarting...
+[I 151107 23:55:49 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+  File "py/server.py", line 78
+    def get_cached_food(food_id):
+      ^
+IndentationError: expected an indented block
+[I 151107 23:56:01 hackathon-appreload:13] app restarting...
+[I 151107 23:56:01 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+  File "py/server.py", line 78
+    def get_cached_food(food_id):
+      ^
+IndentationError: expected an indented block
+[I 151107 23:56:02 hackathon-appreload:13] app restarting...
+[I 151107 23:56:02 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+  File "py/server.py", line 78
+    def get_cached_food(food_id):
+      ^
+IndentationError: expected an indented block
+[I 151107 23:56:33 hackathon-appreload:13] app restarting...
+[I 151107 23:56:33 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+  File "py/server.py", line 78
+    def get_cached_food(food_id):
+      ^
+IndentationError: expected an indented block
+[I 151107 23:56:41 hackathon-appreload:13] app restarting...
+[I 151107 23:56:41 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+  File "py/server.py", line 78
+    def get_cached_food(food_id):
+      ^
+IndentationError: expected an indented block
+[I 151107 23:56:43 hackathon-appreload:13] app restarting...
+[I 151107 23:56:43 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+  File "py/server.py", line 78
+    def get_cached_food(food_id):
+      ^
+IndentationError: expected an indented block
+[I 151107 23:57:10 hackathon-appreload:13] app restarting...
+[I 151107 23:57:10 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+  File "py/server.py", line 78
+    def get_cached_food(food_id):
+      ^
+IndentationError: expected an indented block
+[I 151107 23:57:17 hackathon-appreload:13] app restarting...
+[I 151107 23:57:17 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+[I 151107 23:57:17 hackathon-appreload:13] app restarting...
+[I 151107 23:57:17 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+  File "py/server.py", line 78
+    def get_cached_food(food_id):
+      ^
+IndentationError: expected an indented block
+[I 151107 23:57:40 hackathon-appreload:13] app restarting...
+[I 151107 23:57:40 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+  File "py/server.py", line 78
+    def get_cached_food(food_id):
+      ^
+IndentationError: expected an indented block
+[I 151107 23:57:49 hackathon-appreload:13] app restarting...
+[I 151107 23:57:49 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+[I 151107 23:57:49 hackathon-appreload:13] app restarting...
+[I 151107 23:57:49 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+  File "py/server.py", line 78
+    def get_cached_food(food_id):
+      ^
+IndentationError: expected an indented block
+[I 151107 23:58:09 hackathon-appreload:13] app restarting...
+[I 151107 23:58:09 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+[I 151107 23:58:10 hackathon-appreload:13] app restarting...
+[I 151107 23:58:10 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+  File "py/server.py", line 78
+    def get_cached_food(food_id):
+      ^
+IndentationError: expected an indented block
+[I 151107 23:58:12 hackathon-appreload:13] app restarting...
+[I 151107 23:58:12 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+  File "py/server.py", line 79
+    def get_cached_food(food_id):
+      ^
+IndentationError: expected an indented block
+[I 151107 23:58:21 hackathon-appreload:13] app restarting...
+[I 151107 23:58:21 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Detected change in '/vagrant/py/server.py', reloading
+ * Restarting with stat
+[I 151107 23:58:25 hackathon-appreload:13] app restarting...
+[I 151107 23:58:25 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+[I 151107 23:58:26 hackathon-appreload:13] app restarting...
+[I 151107 23:58:26 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Detected change in '/vagrant/py/server.py', reloading
+ * Restarting with stat
+[I 151107 23:58:44 hackathon-appreload:13] app restarting...
+[I 151107 23:58:44 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Detected change in '/vagrant/py/server.py', reloading
+ * Restarting with stat
+[I 151107 23:58:53 hackathon-appreload:13] app restarting...
+[I 151107 23:58:53 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Detected change in '/vagrant/py/server.py', reloading
+ * Restarting with stat
+[I 151107 23:59:09 hackathon-appreload:13] app restarting...
+[I 151107 23:59:09 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+[I 151107 23:59:09 hackathon-appreload:13] app restarting...
+[I 151107 23:59:09 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+ * Restarting with stat
+[I 151107 23:59:12 hackathon-appreload:13] app restarting...
+[I 151107 23:59:12 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Detected change in '/vagrant/py/server.py', reloading
+ * Restarting with stat
+[I 151107 23:59:15 hackathon-appreload:13] app restarting...
+[I 151107 23:59:15 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+ * Restarting with stat
+[I 151107 23:59:31 hackathon-appreload:13] app restarting...
+[I 151107 23:59:31 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+ * Restarting with stat
+[I 151107 23:59:37 hackathon-appreload:13] app restarting...
+[I 151107 23:59:37 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+ * Restarting with stat
+[I 151107 23:59:40 hackathon-appreload:13] app restarting...
+Exception in thread Thread-1 (most likely raised during interpreter shutdown):[I 151107 23:59:40 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+ * Restarting with stat
+[I 151107 23:59:57 hackathon-appreload:13] app restarting...
+[I 151107 23:59:57 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Detected change in '/vagrant/py/server.py', reloading
+ * Restarting with stat
+[I 151108 00:01:01 hackathon-appreload:13] app restarting...
+[I 151108 00:01:01 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Detected change in '/vagrant/py/server.py', reloading
+ * Restarting with stat
+[I 151108 00:01:09 hackathon-appreload:13] app restarting...
+[I 151108 00:01:09 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+ * Restarting with stat
+[I 151108 00:01:11 hackathon-appreload:13] app restarting...
+[I 151108 00:01:11 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+[I 151108 00:01:12 hackathon-appreload:13] app restarting...
+[I 151108 00:01:12 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Detected change in '/vagrant/py/server.py', reloading
+ * Restarting with stat
+[I 151108 00:01:15 hackathon-appreload:13] app restarting...
+[I 151108 00:01:15 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+ * Restarting with stat
+[I 151108 00:01:17 hackathon-appreload:13] app restarting...
+[I 151108 00:01:17 hackathon-appreload:23] app restarted...
+INFO:hackathon.launcher:app launching...
+INFO:root:activated py2 virtualenv
+INFO:hackathon.launcher:execute script: apt-get install libmysqlclient-dev -y
+Reading package lists...
+Building dependency tree...
+Reading state information...
+libmysqlclient-dev is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+INFO:hackathon.launcher:execute script: pip install -r py/requirements.txt
+Requirement already satisfied (use --upgrade to upgrade): flask in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): mysql-python in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): redis in /srv/virtualenvs/py2/lib/python2.7/site-packages (from -r py/requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): itsdangerous>=0.21 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Werkzeug>=0.7 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): Jinja2>=2.4 in /srv/virtualenvs/py2/lib/python2.7/site-packages (from flask->-r py/requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe in /srv/virtualenvs/py2/lib/python2.7/site-packages (from Jinja2>=2.4->flask->-r py/requirements.txt (line 1))
+INFO:hackathon.launcher:execute script: python py/init_db.py
+INFO:hackathon.launcher:execute script: python py/server.py
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+ * Restarting with stat
