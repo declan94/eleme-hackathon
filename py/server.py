@@ -9,17 +9,34 @@ from flask import request
 from flask import Response
 import json
 
-from DB import db
+from DB import DB
 from my_redis import myr
 
 host = os.getenv("APP_HOST", "localhost")
 port = int(os.getenv("APP_PORT", "8080"))
+db_host = os.getenv("DB_HOST", "localhost")
+db_port = int(os.getenv("DB_PORT", 3306))
+db_name = os.getenv("DB_NAME", "eleme")
+db_user = os.getenv("DB_USER", "root")
+db_pass = os.getenv("DB_PASS", "toor")
+
+def conn_db():
+	db = DB(False, host = db_host, user = db_user, passwd = db_pass, db = db_name, port = db_port)
+	return db
+
+db = conn_db()
+rows = db.select('select min(id) from food')
+min_food_id = rows[0][0]
+rows = db.select('select max(id) from food')
+max_food_id = rows[0][0]
+db.close()
 
 app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return 'Hello World! test'
+    return 'Hello World!'
+
 
 ############### special responses ###############
 
@@ -74,12 +91,15 @@ def authorize():
 # food relative #
 
 def get_food(food_id, use_cache = True):
+	db = conn_db()
 	cached = None
 	if use_cache:
 		cached = get_cached_food(food_id)
 	if cached:
 		return cached
+	db = conn_db()
 	rows = db.select("select `stock`, `price` from `food` where id = %d limit 1" % food_id)
+	db.close()
 	if not rows or len(rows) == 0:
 		return None
 	else:
@@ -103,6 +123,9 @@ def cache_food(food):
 	myr.hset(cache_key, 'stock', food['stock'])
 	myr.hset(cache_key, 'price', food['price'])
 	myr.hset(cache_key, 'cache_time', time())
+
+def food_exists(food_id):
+	return food_id >= min_food_id and food_id <= max_food_id
 
 # cart relative #
 
@@ -175,7 +198,9 @@ def login():
 		return data
 	username = data['username']
 	password = data['password']
+	db = conn_db()
 	rows = db.select("select `id` from user where name='%s' and password='%s' limit 1" % (username, password))
+	db.close()
 	r = Response()
 	if rows and len(rows) > 0:
 		user_id = rows[0][0]
@@ -192,7 +217,9 @@ def foods():
 	user_id = authorize()
 	if isinstance(user_id, Response):
 		return user_id
+	db = conn_db()
 	rows = db.select("select * from food", is_dict = True)
+	db.close()
 	return my_response(rows)
 
 @app.route('/carts', methods=["POST"])
@@ -217,9 +244,14 @@ def patch_carts(cart_id):
 		return my_response({"code": "NOT_AUTHORIZED_TO_ACCESS_CART", "message": "无权限访问指定的篮子"}, 401, "Unauthorized")
 	food_id = int(data['food_id'])
 	count = data['count']
-	food = get_food(food_id)
-	if not food:
+	# 策略一 - 从数据库获取food信息，redis缓存
+	# food = get_food(food_id)
+	# if not food:
+		# return my_response({"code": "FOOD_NOT_FOUND", "message": "食物不存在"}, 404, "Not Found")
+	# 策略二 - 设定food_id连续，根据food_id大小判定
+	if not food_exists(food_id):
 		return my_response({"code": "FOOD_NOT_FOUND", "message": "食物不存在"}, 404, "Not Found")
+	# orders再判断库存
 	# if count > food['stock']:
 	# 	return my_response({"code": "FOOD_OUT_OF_STOCK", "message": "食物库存不足"}, 403, "Forbidden")
 	total = count
@@ -251,19 +283,32 @@ def make_orders():
 	if user_order_id(user_id) != None:
 		return my_response({"code": "ORDER_OUT_OF_LIMIT", "message": "每个用户只能下一单"}, 403, "Forbidden")
 	cart = cart_data(cart_id)
-	db.execute("LOCK TABLE food WRITE")
+	# 策略一 - 原始策略 - autocommit开
+	# db.execute("LOCK TABLE food WRITE")
+	# for i in range(0, len(cart)):
+	# 	item = cart[i]
+	# 	food = get_food(item['food_id'], False)
+	# 	if food['stock'] < item['count']:
+	# 		db.execute("UNLOCK TABLE")
+	# 		return my_response({"code": "FOOD_OUT_OF_STOCK", "message": "食物库存不足"}, 403, "Forbidden")
+	# 	item['stock'] = food['stock']
+	# for i in range(0, len(cart)):
+	# 	item = cart[i]
+	# 	new_stock = item['stock'] - item['count']
+	# 	db.update("food", {"stock": new_stock}, {"id": item['food_id']})
+	# db.execute("UNLOCK TABLE")
+
+	# 策略二 - autocommit 关
+	db = conn_db()
 	for i in range(0, len(cart)):
 		item = cart[i]
-		food = get_food(item['food_id'], False)
-		if food['stock'] < item['count']:
-			db.execute("UNLOCK TABLE")
+		sql = "update `food` set stock = stock - %d where id = %d and stock >= %d" % (item['count'], item['food_id'], item['count'])
+		db.execute(sql)
+		if db.affected_rows() == 0:
+			db.rollback()
 			return my_response({"code": "FOOD_OUT_OF_STOCK", "message": "食物库存不足"}, 403, "Forbidden")
-		item['stock'] = food['stock']
-	for i in range(0, len(cart)):
-		item = cart[i]
-		new_stock = item['stock'] - item['count']
-		db.update("food", {"stock": new_stock}, {"id": item['food_id']})
-	db.execute("UNLOCK TABLE")
+	db.commit()
+	db.close()
 	order_id = cart_id
 	set_user_order_id(user_id, order_id)
 	return my_response({"id": order_id})
@@ -281,7 +326,9 @@ def get_orders():
 
 @app.route('/admin/orders')
 def all_orders():
+	db = conn_db()
 	users = db.select("select id from user")
+	db.close()
 	orders = []
 	for i in range(0, len(users)):
 		user_id = users[i][0]

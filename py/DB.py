@@ -52,11 +52,15 @@ a. Delete the row whose name is 'vm-xxx':
  
 import os
 import MySQLdb
+# import pymysql
+
+# MySQLdb = pymysql
  
 class DB(object):
 
     conn = None;
     cursor = None;
+    closed = True;
 
     '''A simple database query interface.'''
     def __init__(self, auto_commit, **kwargs):
@@ -65,6 +69,7 @@ class DB(object):
         self.conn = MySQLdb.connect(**kwargs)
         self.cursor = self.conn.cursor()
         self.autocommit(auto_commit)
+        self.closed = False
  
     def execute(self, sql, args = None):
         return self.cursor.execute(sql, args)
@@ -127,6 +132,9 @@ class DB(object):
  
     def get_mysql_version(self):
         MySQLdb.get_client_info()
+
+    def affected_rows(self):
+        return self.conn.affected_rows()
  
     def autocommit(self, flag):
         self.conn.autocommit(flag)
@@ -134,8 +142,14 @@ class DB(object):
     def commit(self):
         '''Commits the current transaction.'''
         self.conn.commit()
+
+    def rollback(self):
+        self.conn.rollback()
  
     def close(self):
+        if self.closed:
+            return
+        self.closed = True
         if self.cursor:
             self.cursor.close()
         if self.conn:
@@ -144,11 +158,3 @@ class DB(object):
     def __del__(self):
         self.close()
  
-    
-
-db_host = os.getenv("DB_HOST", "localhost")
-db_port = int(os.getenv("DB_PORT", 3306))
-db_name = os.getenv("DB_NAME", "eleme")
-db_user = os.getenv("DB_USER", "root")
-db_pass = os.getenv("DB_PASS", "toor")
-db = DB(True, host = db_host, user = db_user, passwd = db_pass, db = db_name, port = db_port)
