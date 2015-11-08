@@ -124,7 +124,7 @@ class DB(object):
             dict_keys = [ r[0] for r in self.cursor.description ]
             for row in rows:
                 dict_rows.append(dict(zip(dict_keys, row)))
-                rows = dict_rows 
+            rows = dict_rows 
         return rows
  
     def get_rows_num(self):

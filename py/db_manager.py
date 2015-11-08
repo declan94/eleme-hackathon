@@ -9,8 +9,6 @@ db_name = os.getenv("DB_NAME", "eleme")
 db_user = os.getenv("DB_USER", "root")
 db_pass = os.getenv("DB_PASS", "toor")
 
-
-max_conn_cnt = 100
 max_conn_cache = 100
 
 idle_conn = []
