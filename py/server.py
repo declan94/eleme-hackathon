@@ -20,6 +20,7 @@ rows = db.select('select min(id) from food')
 min_food_id = rows[0][0]
 rows = db.select('select max(id) from food')
 max_food_id = rows[0][0]
+foods = db.select("select * from food", is_dict = True)
 db.close()
 
 app = Flask(__name__)
@@ -204,17 +205,17 @@ def login():
 		return my_response(res_data, 403, "Forbidden")
 
 @app.route('/foods')
-def foods():
+def get_foods():
 	user_id = authorize()
 	if isinstance(user_id, Response):
 		return user_id
-	db = get_db()
-	rows = db.select("select * from food", is_dict = True)
-	reuse_db(db)
-	return my_response(rows)
+	# db = get_db()
+	# foods = db.select("select * from food", is_dict = True)
+	# reuse_db(db)
+	return my_response(foods)
 
 @app.route('/carts', methods=["POST"])
-def carts():
+def new_carts():
 	user_id = authorize()
 	if isinstance(user_id, Response):
 		return user_id
