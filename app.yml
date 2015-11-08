@@ -2,5 +2,5 @@ language: py2
 script:
   - apt-get install libmysqlclient-dev -y
   - pip install -r py_flask/requirements.txt
-  - python py_flask/init_db.py
+  - python py/init_db.py
   - python py_flask/server.py
