@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-from time import time
+from time import time, sleep
 
 from flask import Flask
 from flask import request
@@ -15,19 +15,15 @@ from my_redis import myr
 host = os.getenv("APP_HOST", "localhost")
 port = int(os.getenv("APP_PORT", "8080"))
 
-db = get_db()
-rows = db.select('select min(id) from food')
-min_food_id = rows[0][0]
-rows = db.select('select max(id) from food')
-max_food_id = rows[0][0]
-foods = db.select("select * from food", is_dict = True)
-db.close()
-
 app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
     return 'Hello World!'
+
+@app.route('/test_block')
+def test_block():
+	sleep(10)
 
 
 ############### special responses ###############
@@ -117,6 +113,8 @@ def cache_food(food):
 	myr.hset(cache_key, 'cache_time', time())
 
 def food_exists(food_id):
+	min_food_id = int(myr.get("MIN_FOOD_ID"))
+	max_food_id = int(myr.get("MAX_FOOD_ID"))
 	return food_id >= min_food_id and food_id <= max_food_id
 
 # cart relative #
@@ -209,9 +207,9 @@ def get_foods():
 	user_id = authorize()
 	if isinstance(user_id, Response):
 		return user_id
-	# db = get_db()
-	# foods = db.select("select * from food", is_dict = True)
-	# reuse_db(db)
+	db = get_db()
+	foods = db.select("select * from food", is_dict = True)
+	reuse_db(db)
 	return my_response(foods)
 
 @app.route('/carts', methods=["POST"])

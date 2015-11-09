@@ -18,14 +18,20 @@ def conn_db():
 	return db
 
 def get_db():
-	if len(idle_conn) > 0:
-		db = idle_conn.pop()
-	else:
-		db = conn_db()
-	return db
+	return conn_db()
 
 def reuse_db(db):
-	if len(idle_conn) < max_conn_cache:
-		idle_conn.append(db)
-	else:
-		db.close()
+	db.close()
+	
+# def get_db():
+# 	if len(idle_conn) > 0:
+# 		db = idle_conn.pop()
+# 	else:
+# 		db = conn_db()
+# 	return db
+
+# def reuse_db(db):
+# 	if len(idle_conn) < max_conn_cache:
+# 		idle_conn.append(db)
+# 	else:
+# 		db.close()
