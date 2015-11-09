@@ -9,13 +9,13 @@ from flask import request
 from flask import Response
 import json
 
-from db_manager import get_db, reuse_db
-from my_redis import myr
+from db_manager import get_db, get_redis_store
 
 host = os.getenv("APP_HOST", "localhost")
 port = int(os.getenv("APP_PORT", "8080"))
 
 app = Flask(__name__)
+redis_store = get_redis_store()
 
 @app.route('/')
 def hello_world():
@@ -70,7 +70,7 @@ def authorize():
 		else:
 			return unauthorized()
 	key = "ACCESS_%s" % access_token
-	user_id = myr.get(key)
+	user_id = redis_store.get(key)
 	if user_id == None:
 		return unauthorized()
 	else:
@@ -87,7 +87,7 @@ def get_food(food_id, use_cache = True):
 		return cached
 	db = get_db()
 	rows = db.select("select `stock`, `price` from `food` where id = %d limit 1" % food_id)
-	reuse_db(db)
+	db.close()
 	if not rows or len(rows) == 0:
 		return None
 	else:
@@ -97,47 +97,47 @@ def get_food(food_id, use_cache = True):
 
 def get_cached_food(food_id):
 	cache_key = "FOOD_%d" % food_id
-	ct = myr.hget(cache_key, 'cache_time')
+	ct = redis_store.hget(cache_key, 'cache_time')
 	if not ct or time() - float(ct) > 500:
 		return None
-	stock = myr.hget(cache_key, 'stock')
-	price = myr.hget(cache_key, 'price')
+	stock = redis_store.hget(cache_key, 'stock')
+	price = redis_store.hget(cache_key, 'price')
 	food = {'id': food_id, 'stock': int(stock), 'price': int(price)}
 	return food
 
 def cache_food(food):
 	food_id = food['id']
 	cache_key = "FOOD_%d" % food_id
-	myr.hset(cache_key, 'stock', food['stock'])
-	myr.hset(cache_key, 'price', food['price'])
-	myr.hset(cache_key, 'cache_time', time())
+	redis_store.hset(cache_key, 'stock', food['stock'])
+	redis_store.hset(cache_key, 'price', food['price'])
+	redis_store.hset(cache_key, 'cache_time', time())
 
 def food_exists(food_id):
-	min_food_id = int(myr.get("MIN_FOOD_ID"))
-	max_food_id = int(myr.get("MAX_FOOD_ID"))
+	min_food_id = int(redis_store.get("MIN_FOOD_ID"))
+	max_food_id = int(redis_store.get("MAX_FOOD_ID"))
 	return food_id >= min_food_id and food_id <= max_food_id
 
 # cart relative #
 
 def cart_new(user_id):
-	cart_id = "%032d" % myr.incr('CART_ID')
-	myr.set("USER_CART_%d_%s" % (user_id, cart_id), '1')
+	cart_id = "%032d" % redis_store.incr('CART_ID')
+	redis_store.set("USER_CART_%d_%s" % (user_id, cart_id), '1')
 	return cart_id
 
 def cart_exists(cart_id):
-	max_cart_id = int(myr.get('CART_ID'))
+	max_cart_id = int(redis_store.get('CART_ID'))
 	cid = int(cart_id)
 	return (cid >= 0 and cid <= max_cart_id)
 
 def cart_belongs(cart_id, user_id):
 	key = "USER_CART_%d_%s" %(user_id, cart_id)
-	return  myr.get(key) == '1'
+	return  redis_store.get(key) == '1'
 
 def cart_data(cart_id):
 	data = []
-	fid_set = myr.smembers("CART_"+cart_id)
+	fid_set = redis_store.smembers("CART_"+cart_id)
 	for food_id in fid_set:
-		count = myr.get("COUNT_%s_%s" % (cart_id, food_id))
+		count = redis_store.get("COUNT_%s_%s" % (cart_id, food_id))
 		if count:
 			count = int(count)
 		else:
@@ -146,9 +146,9 @@ def cart_data(cart_id):
 	return data
 
 def cart_patch(cart_id, food_id, count):
-	myr.sadd("CART_" + cart_id, food_id)
+	redis_store.sadd("CART_" + cart_id, food_id)
 	k = "COUNT_%s_%d" % (cart_id, food_id)
-	oc = myr.get(k)
+	oc = redis_store.get(k)
 	if not oc:
 		oc = 0
 	else:
@@ -156,15 +156,15 @@ def cart_patch(cart_id, food_id, count):
 	c = oc + count
 	if c < 0:
 		c = 0
-	myr.set(k, c)
+	redis_store.set(k, c)
 
 # order relative #
 
 def user_order_id(user_id):
-	return myr.get("ORDER_%d" % user_id)
+	return redis_store.get("ORDER_%d" % user_id)
 
 def set_user_order_id(user_id, order_id):
-	myr.set("ORDER_%d" % user_id, order_id)
+	redis_store.set("ORDER_%d" % user_id, order_id)
 
 def user_order(user_id):
 	order_id = user_order_id(user_id)
@@ -190,12 +190,12 @@ def login():
 	password = data['password']
 	db = get_db()
 	rows = db.select("select `id` from user where name='%s' and password='%s' limit 1" % (username, password))
-	reuse_db(db)
+	db.close()
 	r = Response()
 	if rows and len(rows) > 0:
 		user_id = rows[0][0]
 		access_token = "%d" % user_id
-		myr.set("ACCESS_%s" % access_token, user_id)
+		redis_store.set("ACCESS_%s" % access_token, user_id)
 		res_data = {'user_id': user_id, 'username': data['username'], 'access_token': access_token}
 		return my_response(res_data)
 	else:
@@ -209,7 +209,7 @@ def get_foods():
 		return user_id
 	db = get_db()
 	foods = db.select("select * from food", is_dict = True)
-	reuse_db(db)
+	db.close()
 	return my_response(foods)
 
 @app.route('/carts', methods=["POST"])
@@ -298,7 +298,7 @@ def make_orders():
 			db.rollback()
 			return my_response({"code": "FOOD_OUT_OF_STOCK", "message": "食物库存不足"}, 403, "Forbidden")
 	db.commit()
-	reuse_db(db)
+	db.close()
 	order_id = cart_id
 	set_user_order_id(user_id, order_id)
 	return my_response({"id": order_id})
@@ -318,7 +318,7 @@ def get_orders():
 def all_orders():
 	db = get_db()
 	users = db.select("select id from user")
-	reuse_db(db)
+	db.close()
 	orders = []
 	for i in range(0, len(users)):
 		user_id = users[i][0]

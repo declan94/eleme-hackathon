@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from db_manager import get_db
-from my_redis import myr
+from db_manager import get_db, get_redis_store
 
-# db.execute('CREATE  TABLE  test (name VARCHAR(20),password VARCHAR(20));')
+myr = get_redis_store()
 myr.flushdb()
 
 db = get_db()
