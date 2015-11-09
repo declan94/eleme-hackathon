@@ -3,5 +3,4 @@ script:
   - apt-get install libmysqlclient-dev -y
   - pip install -r py_flask/requirements.txt
   - python py_flask/init_db.py
-  # - python py_flask/server.py
-  - cd py_flask && uwsgi --http-socket=$APP_HOST:$APP_PORT --wsgi-file=server.py --callable=app --processes 2 --threads 20
+  - cd py_flask && uwsgi --http-socket=$APP_HOST:$APP_PORT --wsgi-file=server.py --callable=app --processes 2 --threads 25
