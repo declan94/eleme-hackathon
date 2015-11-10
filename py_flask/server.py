@@ -9,7 +9,7 @@ from flask import request
 from flask import Response
 import json
 
-from db_manager import get_db, get_redis_store
+from db_manager import get_redis_store
 
 host = os.getenv("APP_HOST", "localhost")
 port = int(os.getenv("APP_PORT", "8080"))
@@ -60,6 +60,16 @@ def check_data():
 		else:
 			return data
 
+# authorize relative
+def check_login(name, password):
+	p = redis_store.get("dd.user%s.password" % name)
+	if p != password:
+		return False
+	user_id = int(redis_store.get("dd.user%s.id" % name))
+	access_token = "%d" % user_id
+	redis_store.set("dd.access%s" % access_token, user_id)
+	return (user_id, access_token)
+
 def authorize():
 	if request.headers.has_key('Access-Token'):
 		access_token = request.headers['Access-Token']
@@ -69,7 +79,7 @@ def authorize():
 			access_token = args['access_token']
 		else:
 			return unauthorized()
-	key = "ACCESS_%s" % access_token
+	key = "dd.access%s" % access_token
 	user_id = redis_store.get(key)
 	if user_id == None:
 		return unauthorized()
@@ -78,59 +88,29 @@ def authorize():
 
 # food relative #
 
-def get_food(food_id, use_cache = True):
-	db = get_db()
-	cached = None
-	if use_cache:
-		cached = get_cached_food(food_id)
-	if cached:
-		return cached
-	db = get_db()
-	rows = db.select("select `stock`, `price` from `food` where id = %d limit 1" % food_id)
-	db.close()
-	if not rows or len(rows) == 0:
-		return None
-	else:
-		food = {'id': food_id, 'stock': rows[0][0], 'price': rows[0][1]}
-		cache_food(food)
-		return food
+def food_key(food_id, field = "stock"):
+	return "dd.food%d.%s" % (food_id, field)
 
-def get_cached_food(food_id):
-	cache_key = "FOOD_%d" % food_id
-	ct = redis_store.hget(cache_key, 'cache_time')
-	if not ct or time() - float(ct) > 500:
-		return None
-	stock = redis_store.hget(cache_key, 'stock')
-	price = redis_store.hget(cache_key, 'price')
-	food = {'id': food_id, 'stock': int(stock), 'price': int(price)}
-	return food
-
-def cache_food(food):
-	food_id = food['id']
-	cache_key = "FOOD_%d" % food_id
-	redis_store.hset(cache_key, 'stock', food['stock'])
-	redis_store.hset(cache_key, 'price', food['price'])
-	redis_store.hset(cache_key, 'cache_time', time())
+def food_field(food_id, field = "stock"):
+	return int(redis_store.get(food_key(food_id, field)))
 
 def food_exists(food_id):
-	min_food_id = int(redis_store.get("MIN_FOOD_ID"))
-	max_food_id = int(redis_store.get("MAX_FOOD_ID"))
-	return food_id >= min_food_id and food_id <= max_food_id
+	return redis_store.get(food_key(food_id)) != None
 
 # cart relative #
 
 def cart_new(user_id):
-	cart_id = "%d" % redis_store.incr('CART_ID')
-	redis_store.set("USER_CART_%d_%s" % (user_id, cart_id), '1')
+	cart_id = "%d" % redis_store.incr('dd.cart.id')
+	redis_store.set("dd.user%d.cart%s" % (user_id, cart_id), '1')
 	return cart_id
 
 def cart_exists(cart_id):
-	max_cart_id = int(redis_store.get('CART_ID'))
+	max_cart_id = int(redis_store.get('dd.cart.id'))
 	cid = int(cart_id)
 	return (cid >= 0 and cid <= max_cart_id)
 
 def cart_belongs(cart_id, user_id):
-	key = "USER_CART_%d_%s" %(user_id, cart_id)
+	key = "dd.user%d.cart%s" %(user_id, cart_id)
 	return  redis_store.get(key) == '1'
 
 def cart_data(cart_id):
@@ -174,8 +154,8 @@ def user_order(user_id):
 	total = 0
 	for i in range(0, len(items)):
 		item = items[i]
-		food = get_food(int(item['food_id']))
-		total = total + food['price'] * item['count']
+		price = food_field(item['food_id'], 'price')
+		total = total + price * item['count']
 	return {"id": order_id, "items": items, "total": total}
 
 
@@ -186,17 +166,13 @@ def login():
 	data = check_data()
 	if isinstance(data, Response):
 		return data
-	username = data['username']
+	name = data['username']
 	password = data['password']
-	db = get_db()
-	rows = db.select("select `id` from user where name='%s' and password='%s' limit 1" % (username, password))
-	db.close()
-	r = Response()
-	if rows and len(rows) > 0:
-		user_id = rows[0][0]
-		access_token = "%d" % user_id
-		redis_store.set("ACCESS_%s" % access_token, user_id)
-		res_data = {'user_id': user_id, 'username': data['username'], 'access_token': access_token}
+	check = check_login(name, password)
+	if check != False:
+		user_id = check[0]
+		access_token = check[1]
+		res_data = {'user_id': user_id, 'username': name, 'access_token': access_token}
 		return my_response(res_data)
 	else:
 		res_data = {"code": "USER_AUTH_FAIL", "message": "用户名或密码错误"}
@@ -207,9 +183,13 @@ def get_foods():
 	user_id = authorize()
 	if isinstance(user_id, Response):
 		return user_id
-	db = get_db()
-	foods = db.select("select * from food", is_dict = True)
-	db.close()
+	a = int(redis_store.get("dd.food.min_id"))
+	b = int(redis_store.get("dd.food.max_id"))
+	foods = []
+	for food_id in range(a, b+1):
+		stock = food_field(food_id)
+		price = food_field(food_id, "price")
+		foods.append({"id": food_id, "stock": stock, "price": price})
 	return my_response(foods)
 
 @app.route('/carts', methods=["POST"])
@@ -289,16 +269,39 @@ def make_orders():
 	# db.execute("UNLOCK TABLE")
 
 	# 策略二 - autocommit 关
-	db = get_db()
-	for i in range(0, len(cart)):
-		item = cart[i]
-		sql = "update `food` set stock = stock - %d where id = %d and stock >= %d" % (item['count'], item['food_id'], item['count'])
-		db.execute(sql)
-		if db.affected_rows() == 0:
-			db.rollback()
-			return my_response({"code": "FOOD_OUT_OF_STOCK", "message": "食物库存不足"}, 403, "Forbidden")
-	db.commit()
-	db.close()
+	# db = get_db()
+	# for i in range(0, len(cart)):
+	# 	item = cart[i]
+	# 	sql = "update `food` set stock = stock - %d where id = %d and stock >= %d" % (item['count'], item['food_id'], item['count'])
+	# 	db.execute(sql)
+	# 	if db.affected_rows() == 0:
+	# 		db.rollback()
+	# 		return my_response({"code": "FOOD_OUT_OF_STOCK", "message": "食物库存不足"}, 403, "Forbidden")
+	# db.commit()
+	# db.close()
+
+	# 策略三 - 完全redis
+	pipe = redis_store.pipeline()
+	while True:
+		for i in range(0, len(cart)):
+			food_id = cart[i]['food_id']
+			pipe.watch(food_key(food_id))
+			stock = food_field(food_id)
+			if stock < cart[i]['count']:
+				pipe.unwatch()
+				return my_response({"code": "FOOD_OUT_OF_STOCK", "message": "食物库存不足"}, 403, "Forbidden")
+			cart[i]['stock'] = stock
+		pipe.multi()
+		for i in range(0, len(cart)):
+			item = cart[i]
+			food_id = item['food_id']
+			new_stock = item['stock'] - item['count']
+			pipe.set(food_key(food_id), new_stock)
+		try:
+			pipe.execute()
+			break
+		except WatchError:
+			continue
 	order_id = cart_id
 	set_user_order_id(user_id, order_id)
 	return my_response({"id": order_id})
@@ -316,11 +319,10 @@ def get_orders():
 
 @app.route('/admin/orders')
 def all_orders():
-	db = get_db()
-	users = db.select("select id from user")
-	db.close()
 	orders = []
-	for i in range(0, len(users)):
+	min_user_id = int(redis_store.get('dd.user.min_id'))
+	max_user_id = int(redis_store.get('dd.user.max_id'))
+	for i in range(min_user_id, max_user_id+1):
 		user_id = users[i][0]
 		order = user_order(user_id)
 		if order:
