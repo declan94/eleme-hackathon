@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from db_manager import get_db, get_redis_store
+import json
 
 # cache all data in redis
 
@@ -16,7 +17,7 @@ min_user_id = rows[0][0]
 rows = db.select('select max(id) from user')
 max_user_id = rows[0][0]
 
-all_foods = db.select('select * from food')
+all_foods = db.select('select * from food', is_dict=True)
 all_users = db.select('select * from user')
 
 db.close()
@@ -27,11 +28,12 @@ myr.set('dd.food.min_id', min_food_id)
 myr.set('dd.food.max_id', max_food_id)
 myr.set('dd.user.min_id', min_user_id)
 myr.set('dd.user.max_id', max_user_id)
+myr.set('dd.food.json', json.dumps(all_foods))
 
 for i in range(0, len(all_foods)):
 	f = all_foods[i]
-	myr.set("dd.food%d.stock" % f[0], f[1])
-	myr.set("dd.food%d.price" % f[0], f[2])
+	myr.set("dd.food%d.stock" % f['id'], f['stock'])
+	myr.set("dd.food%d.price" % f['id'], f['price'])
 
 for i in range(0, len(all_users)):
 	u = all_users[i]

@@ -70,6 +70,16 @@ def check_login(name, password):
 	redis_store.set("dd.access%s" % access_token, user_id)
 	return (user_id, access_token)
 
+def check_login2(name, password):
+	db = get_db()
+	row = db.select("select id from user where name='%s' and password='%s' limit 1" % (name, password))
+	if not row or len(row) == 0:
+		return False
+	user_id = row[0][0]
+	access_token = "%d" % user_id
+	redis_store.set("dd.access%s" % access_token, user_id)
+	return (user_id, access_token)
+
 def authorize():
 	if request.headers.has_key('Access-Token'):
 		access_token = request.headers['Access-Token']
@@ -158,6 +168,39 @@ def user_order(user_id):
 		total = total + price * item['count']
 	return {"id": order_id, "items": items, "total": total}
 
+def order_muti_foods(cart):
+	pipe = redis_store.pipeline()
+	while True:
+		for i in range(0, len(cart)):
+			food_id = cart[i]['food_id']
+			pipe.watch(food_key(food_id))
+			stock = food_field(food_id)
+			if stock < cart[i]['count']:
+				pipe.unwatch()
+				return False
+			cart[i]['stock'] = stock
+		pipe.multi()
+		for i in range(0, len(cart)):
+			item = cart[i]
+			food_id = item['food_id']
+			new_stock = item['stock'] - item['count']
+			pipe.set(food_key(food_id), new_stock)
+		try:
+			pipe.execute()
+			break
+		except WatchError:
+			continue
+	return True
+
+def order_single_food(food):
+	food_id = food['food_id']
+	count = food['count']
+	k = food_key(food_id)
+	if redis_store.incrby(k, -count) < 0:
+		redis_store.incrby(k, count)
+		return False
+	return True
+
 
 ############### view functions ###############
 
@@ -190,9 +233,13 @@ def get_foods():
 	# 	stock = food_field(food_id)
 	# 	price = food_field(food_id, "price")
 	# 	foods.append({"id": food_id, "stock": stock, "price": price})
-	db = get_db()
-	foods = db.select('select * from food', is_dict=True)
-	db.close()
+	# 
+	# db = get_db()
+	# foods = db.select('select * from food', is_dict=True)
+	# db.close()
+	# 
+	temp = redis_store.get('dd.food.json')
+	foods = json.loads(temp)
 	return my_response(foods)
 
 @app.route('/carts', methods=["POST"])
@@ -256,6 +303,7 @@ def make_orders():
 	if user_order_id(user_id) != None:
 		return my_response({"code": "ORDER_OUT_OF_LIMIT", "message": "每个用户只能下一单"}, 403, "Forbidden")
 	cart = cart_data(cart_id)
+
 	# 策略一 - 原始策略 - autocommit开
 	# db.execute("LOCK TABLE food WRITE")
 	# for i in range(0, len(cart)):
@@ -284,27 +332,12 @@ def make_orders():
 	# db.close()
 
 	# 策略三 - 完全redis
-	pipe = redis_store.pipeline()
-	while True:
-		for i in range(0, len(cart)):
-			food_id = cart[i]['food_id']
-			pipe.watch(food_key(food_id))
-			stock = food_field(food_id)
-			if stock < cart[i]['count']:
-				pipe.unwatch()
-				return my_response({"code": "FOOD_OUT_OF_STOCK", "message": "食物库存不足"}, 403, "Forbidden")
-			cart[i]['stock'] = stock
-		pipe.multi()
-		for i in range(0, len(cart)):
-			item = cart[i]
-			food_id = item['food_id']
-			new_stock = item['stock'] - item['count']
-			pipe.set(food_key(food_id), new_stock)
-		try:
-			pipe.execute()
-			break
-		except WatchError:
-			continue
+	if len(cart) == 1:
+		ret = order_single_food(cart[0])
+	else:
+		ret = order_muti_foods(cart)
+	if not ret:
+		return my_response({"code": "FOOD_OUT_OF_STOCK", "message": "食物库存不足"}, 403, "Forbidden")
 	order_id = cart_id
 	set_user_order_id(user_id, order_id)
 	return my_response({"id": order_id})
