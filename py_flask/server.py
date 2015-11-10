@@ -9,7 +9,7 @@ from flask import request
 from flask import Response
 import json
 
-from db_manager import get_redis_store
+from db_manager import get_db, get_redis_store
 
 host = os.getenv("APP_HOST", "localhost")
 port = int(os.getenv("APP_PORT", "8080"))
@@ -183,13 +183,16 @@ def get_foods():
 	user_id = authorize()
 	if isinstance(user_id, Response):
 		return user_id
-	a = int(redis_store.get("dd.food.min_id"))
-	b = int(redis_store.get("dd.food.max_id"))
-	foods = []
-	for food_id in range(a, b+1):
-		stock = food_field(food_id)
-		price = food_field(food_id, "price")
-		foods.append({"id": food_id, "stock": stock, "price": price})
+	# a = int(redis_store.get("dd.food.min_id"))
+	# b = int(redis_store.get("dd.food.max_id"))
+	# foods = []
+	# for food_id in range(a, b+1):
+	# 	stock = food_field(food_id)
+	# 	price = food_field(food_id, "price")
+	# 	foods.append({"id": food_id, "stock": stock, "price": price})
+	db = get_db()
+	foods = db.select('select * from food', is_dict=True)
+	db.close()
 	return my_response(foods)
 
 @app.route('/carts', methods=["POST"])
