@@ -330,5 +330,6 @@ def all_orders():
 
 
 if __name__ == '__main__':
-    app.run(host=host, port=port, debug=True)
+	# app.run(host=host, port=port, debug=True)
+    app.run(host=host, port=port, debug=False)
 
