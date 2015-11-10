@@ -70,6 +70,16 @@ def check_login(name, password):
 	redis_store.set("dd.access%s" % access_token, user_id)
 	return (user_id, access_token)
 
+def check_login2(name, password):
+	db = get_db()
+	row = db.select("select id from user where name='%s' and password='%s' limit 1" % (name, password))
+	if not row or len(row) == 0:
+		return False
+	user_id = row[0][0]
+	access_token = "%d" % user_id
+	redis_store.set("dd.access%s" % access_token, user_id)
+	return (user_id, access_token)
+
 def authorize():
 	if request.headers.has_key('Access-Token'):
 		access_token = request.headers['Access-Token']
