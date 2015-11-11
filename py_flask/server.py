@@ -125,9 +125,9 @@ def cart_belongs(cart_id, user_id):
 
 def cart_data(cart_id):
 	data = []
-	fid_set = redis_store.smembers("CART_"+cart_id)
+	fid_set = redis_store.smembers("dd.cart"+cart_id)
 	for food_id in fid_set:
-		count = redis_store.get("COUNT_%s_%s" % (cart_id, food_id))
+		count = redis_store.get("dd.cart%s.count%s" % (cart_id, food_id))
 		if count:
 			count = int(count)
 		else:
@@ -136,8 +136,8 @@ def cart_data(cart_id):
 	return data
 
 def cart_patch(cart_id, food_id, count):
-	redis_store.sadd("CART_" + cart_id, food_id)
-	k = "COUNT_%s_%d" % (cart_id, food_id)
+	redis_store.sadd("dd.cart%s" % cart_id, food_id)
+	k = "dd.cart%s.count%d" % (cart_id, food_id)
 	oc = redis_store.get(k)
 	if not oc:
 		oc = 0
@@ -151,10 +151,10 @@ def cart_patch(cart_id, food_id, count):
 # order relative #
 
 def user_order_id(user_id):
-	return redis_store.get("ORDER_%d" % user_id)
+	return redis_store.get("dd.order%d" % user_id)
 
 def set_user_order_id(user_id, order_id):
-	redis_store.set("ORDER_%d" % user_id, order_id)
+	redis_store.set("dd.order%d" % user_id, order_id)
 
 def user_order(user_id):
 	order_id = user_order_id(user_id)
