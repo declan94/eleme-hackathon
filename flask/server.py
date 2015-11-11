@@ -33,7 +33,10 @@ def my_response(data, status_code = 200, status = "ok"):
 	r.status = status
 	r.status_code = status_code
 	if data != None:
-		r.data = json.dumps(data)
+		if isinstance(data, str):
+			r.data = data
+		else:
+			r.data = json.dumps(data)
 	return r
 
 def bad_req_1():
@@ -162,37 +165,24 @@ def user_order(user_id):
 	return {"id": order_id, "items": items, "total": total}
 
 def order_muti_foods(cart):
-	pipe = redis_store.pipeline()
-	while True:
-		for i in range(0, len(cart)):
-			food_id = cart[i]['food_id']
-			pipe.watch(food_key(food_id))
-			stock = food_field(food_id)
-			if stock < cart[i]['count']:
-				pipe.unwatch()
-				return False
-			cart[i]['stock'] = stock
-		pipe.multi()
-		for i in range(0, len(cart)):
-			item = cart[i]
-			food_id = item['food_id']
-			new_stock = item['stock'] - item['count']
-			pipe.set(food_key(food_id), new_stock)
-		try:
-			pipe.execute()
-			break
-		except WatchError:
-			continue
+	for i in range(0, len(cart)):
+		food_id = cart[i]['food_id']
+		count = cart[i]['count']
+		k = food_key(food_id)
+		if redis_store.incrby(k, -count) < 0:
+			for j in range(0, i+1):				
+				redis_store.incrby(food_key(cart[j]['food_id'], cart[j]['count']))
+			return False
 	return True
 
-def order_single_food(food):
-	food_id = food['food_id']
-	count = food['count']
-	k = food_key(food_id)
-	if redis_store.incrby(k, -count) < 0:
-		redis_store.incrby(k, count)
-		return False
-	return True
+# def order_single_food(food):
+# 	food_id = food['food_id']
+# 	count = food['count']
+# 	k = food_key(food_id)
+# 	if redis_store.incrby(k, -count) < 0:
+# 		redis_store.incrby(k, count)
+# 		return False
+# 	return True
 
 
 ############### view functions ###############
@@ -231,9 +221,8 @@ def get_foods():
 	# foods = db.select('select * from food', is_dict=True)
 	# db.close()
 	# 
-	temp = redis_store.get('dd.food.json')
-	foods = json.loads(temp)
-	return my_response(foods)
+	foods_json = redis_store.get('dd.food.json')
+	return my_response(foods_json)
 
 @app.route('/carts', methods=["POST"])
 def new_carts():
@@ -264,9 +253,6 @@ def patch_carts(cart_id):
 	# 策略二 - 设定food_id连续，根据food_id大小判定
 	if not food_exists(food_id):
 		return my_response({"code": "FOOD_NOT_FOUND", "message": "食物不存在"}, 404, "Not Found")
-	orders再判断库存
-	if count > food_field(food_id):
-		return my_response({"code": "FOOD_OUT_OF_STOCK", "message": "食物库存不足"}, 403, "Forbidden")
 	total = count
 	if total > 3:
 		return my_response({"code": "FOOD_OUT_OF_LIMIT", "message": "篮子中食物数量超过了三个"}, 403, "Forbidden");
@@ -325,12 +311,11 @@ def make_orders():
 	# db.close()
 
 	# 策略三 - 完全redis
-	if len(cart) == 1:
-		ret = order_single_food(cart[0])
-	else:
-		ret = order_muti_foods(cart)
+	
+	ret = order_muti_foods(cart)
 	if not ret:
 		return my_response({"code": "FOOD_OUT_OF_STOCK", "message": "食物库存不足"}, 403, "Forbidden")
+
 	order_id = cart_id
 	set_user_order_id(user_id, order_id)
 	return my_response({"id": order_id})
