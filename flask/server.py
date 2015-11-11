@@ -264,18 +264,18 @@ def patch_carts(cart_id):
 	# 策略二 - 设定food_id连续，根据food_id大小判定
 	if not food_exists(food_id):
 		return my_response({"code": "FOOD_NOT_FOUND", "message": "食物不存在"}, 404, "Not Found")
-	# orders再判断库存
-	# if count > food['stock']:
-	# 	return my_response({"code": "FOOD_OUT_OF_STOCK", "message": "食物库存不足"}, 403, "Forbidden")
+	orders再判断库存
+	if count > food_field(food_id):
+		return my_response({"code": "FOOD_OUT_OF_STOCK", "message": "食物库存不足"}, 403, "Forbidden")
 	total = count
 	if total > 3:
 		return my_response({"code": "FOOD_OUT_OF_LIMIT", "message": "篮子中食物数量超过了三个"}, 403, "Forbidden");
-	old = cart_data(cart_id)
-	if old:
-		for i in range(0, len(old)):
-			total = total + old[i]['count']
-			if total > 3:
-				return my_response({"code": "FOOD_OUT_OF_LIMIT", "message": "篮子中食物数量超过了三个"}, 403, "Forbidden");
+	# old = cart_data(cart_id)
+	# if old:
+	# 	for i in range(0, len(old)):
+	# 		total = total + old[i]['count']
+	# 		if total > 3:
+	# 			return my_response({"code": "FOOD_OUT_OF_LIMIT", "message": "篮子中食物数量超过了三个"}, 403, "Forbidden");
 	if not user_order_id(user_id):
 		cart_patch(cart_id, food_id, count)
 	return my_response(None, 204, "No content")
