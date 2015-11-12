@@ -124,9 +124,10 @@ def cart_new(user_id):
 	return cart_id
 
 def cart_exists(cart_id):
-	max_cart_id = int(redis_store.get('dd.cart.id'))
-	cid = int(cart_id)
-	return (cid >= 0 and cid <= max_cart_id)
+	# max_cart_id = int(redis_store.get('dd.cart.id'))
+	# cid = int(cart_id)
+	# return (cid >= 0 and cid <= max_cart_id)
+	return int(cart_id) >= 0
 
 def cart_belongs(cart_id, user_id):
 	key = "dd.user%d.cart%s" %(user_id, cart_id)
