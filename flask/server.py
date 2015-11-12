@@ -65,10 +65,13 @@ def check_data():
 
 # authorize relative
 def check_login(name, password):
-	p = redis_store.hget("dd.user%s" % name, "password")
-	if p != password:
+	# p = redis_store.hget("dd.user%s" % name, "password")
+	# if p != password:
+	# 	return False
+	# access_token = redis_store.hget("dd.user%s" % name, "id")
+	access_token = redis_store.get("dd.user%s.password%s" % (name, password))
+	if access_token == None:
 		return False
-	access_token = redis_store.hget("dd.user%s" % name, "id")
 	user_id = int(access_token)
 	# redis_store.set("dd.access%s" % access_token, user_id)
 	return (user_id, access_token)
@@ -212,6 +215,10 @@ def get_foods():
 	user_id = authorize()
 	if isinstance(user_id, Response):
 		return user_id
+	# db = get_db()
+	# foods = db.select('select * from food', is_dict=True)
+	# db.close()
+	#
 	# a = int(redis_store.get("dd.food.min_id"))
 	# b = int(redis_store.get("dd.food.max_id"))
 	# foods = []
@@ -219,11 +226,6 @@ def get_foods():
 	# 	stock = food_field(food_id)
 	# 	price = food_field(food_id, "price")
 	# 	foods.append({"id": food_id, "stock": stock, "price": price})
-	# 
-	# db = get_db()
-	# foods = db.select('select * from food', is_dict=True)
-	# db.close()
-	# 
 	foods_json = redis_store.get('dd.food.json')
 	return my_response(foods_json)
 

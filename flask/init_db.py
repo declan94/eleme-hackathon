@@ -37,7 +37,8 @@ for i in range(0, len(all_foods)):
 
 for i in range(0, len(all_users)):
 	u = all_users[i]
-	myr.hset("dd.user%s" % u[1], "password", u[2])
-	myr.hset("dd.user%s" % u[1], "id", u[0])
+	myr.set("dd.user%s.password%s" % (u[1], u[2]), u[0])
+	# myr.hset("dd.user%s" % u[1], "password", u[2])
+	# myr.hset("dd.user%s" % u[1], "id", u[0])
 
 
