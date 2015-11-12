@@ -65,12 +65,12 @@ def check_data():
 
 # authorize relative
 def check_login(name, password):
-	p = redis_store.get("dd.user%s.password" % name)
+	p = redis_store.hget("dd.user%s" % name, "password")
 	if p != password:
 		return False
-	user_id = int(redis_store.get("dd.user%s.id" % name))
-	access_token = "%d" % user_id
-	redis_store.set("dd.access%s" % access_token, user_id)
+	access_token = redis_store.hget("dd.user%s" % name, "id")
+	user_id = int(access_token)
+	# redis_store.set("dd.access%s" % access_token, user_id)
 	return (user_id, access_token)
 
 def check_login2(name, password):
@@ -80,7 +80,7 @@ def check_login2(name, password):
 		return False
 	user_id = row[0][0]
 	access_token = "%d" % user_id
-	redis_store.set("dd.access%s" % access_token, user_id)
+	# redis_store.set("dd.access%s" % access_token, user_id)
 	return (user_id, access_token)
 
 def authorize():
@@ -92,12 +92,13 @@ def authorize():
 			access_token = args['access_token']
 		else:
 			return unauthorized()
-	key = "dd.access%s" % access_token
-	user_id = redis_store.get(key)
-	if user_id == None:
-		return unauthorized()
-	else:
-		return int(user_id)
+	# key = "dd.access%s" % access_token
+	# user_id = redis_store.get(key)
+	# if user_id == None:
+	# 	return unauthorized()
+	# else:
+	# 	return int(user_id)
+	return int(access_token)
 
 # food relative #
 
@@ -108,7 +109,9 @@ def food_field(food_id, field = "stock"):
 	return int(redis_store.get(food_key(food_id, field)))
 
 def food_exists(food_id):
-	return redis_store.get(food_key(food_id)) != None
+	# food_range = redis_store.hgetall('dd.food')
+	# return food_id >= int(food_range['min_id']) and food_id <= int(food_range['max_id'])
+	return food_id > 0
 
 # cart relative #
 
@@ -175,14 +178,14 @@ def order_muti_foods(cart):
 			return False
 	return True
 
-# def order_single_food(food):
-# 	food_id = food['food_id']
-# 	count = food['count']
-# 	k = food_key(food_id)
-# 	if redis_store.incrby(k, -count) < 0:
-# 		redis_store.incrby(k, count)
-# 		return False
-# 	return True
+def order_single_food(food):
+	food_id = food['food_id']
+	count = food['count']
+	k = food_key(food_id)
+	if redis_store.incrby(k, -count) < 0:
+		redis_store.incrby(k, count)
+		return False
+	return True
 
 
 ############### view functions ###############
@@ -312,7 +315,12 @@ def make_orders():
 
 	# 策略三 - 完全redis
 	
-	ret = order_muti_foods(cart)
+	if len(cart) == 1:
+		ret = order_single_food(cart[0])
+	else:
+		# ret = order_muti_foods(cart)
+		ret = True
+
 	if not ret:
 		return my_response({"code": "FOOD_OUT_OF_STOCK", "message": "食物库存不足"}, 403, "Forbidden")
 
@@ -334,8 +342,8 @@ def get_orders():
 @app.route('/admin/orders')
 def all_orders():
 	orders = []
-	min_user_id = int(redis_store.get('dd.user.min_id'))
-	max_user_id = int(redis_store.get('dd.user.max_id'))
+	min_user_id = int(redis_store.hget('dd.user', 'min_id'))
+	max_user_id = int(redis_store.hget('dd.user', 'max_id'))
 	for i in range(min_user_id, max_user_id+1):
 		user_id = users[i][0]
 		order = user_order(user_id)
