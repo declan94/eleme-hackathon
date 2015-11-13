@@ -15,7 +15,6 @@ host = os.getenv("APP_HOST", "localhost")
 port = int(os.getenv("APP_PORT", "8080"))
 
 app = Flask(__name__)
-redis_store = get_redis_store()
 
 @app.route('/')
 def hello_world():
@@ -69,6 +68,7 @@ def check_login(name, password):
 	# if p != password:
 	# 	return False
 	# access_token = redis_store.hget("dd.user%s" % name, "id")
+	redis_store = get_redis_store()
 	access_token = redis_store.get("dd.user%s.password%s" % (name, password))
 	if access_token == None:
 		return False
@@ -109,6 +109,7 @@ def food_key(food_id, field = "stock"):
 	return "dd.food%d.%s" % (food_id, field)
 
 def food_field(food_id, field = "stock"):
+	redis_store = get_redis_store()
 	return int(redis_store.get(food_key(food_id, field)))
 
 def food_exists(food_id):
@@ -119,8 +120,9 @@ def food_exists(food_id):
 # cart relative #
 
 def cart_new(user_id):
+	redis_store = get_redis_store()
 	cart_id = "%d" % redis_store.incr('dd.cart.id')
-	redis_store.set("dd.user%d.cart%s" % (user_id, cart_id), '1')
+	# redis_store.set("dd.user%d.cart%s" % (user_id, cart_id), '1')
 	return cart_id
 
 def cart_exists(cart_id):
@@ -131,10 +133,12 @@ def cart_exists(cart_id):
 
 def cart_belongs(cart_id, user_id):
 	key = "dd.user%d.cart%s" %(user_id, cart_id)
+	redis_store = get_redis_store()
 	return  redis_store.get(key) == '1'
 
 def cart_data(cart_id):
 	data = []
+	redis_store = get_redis_store()
 	fid_set = redis_store.smembers("dd.cart%s" % cart_id)
 	for food_id in fid_set:
 		count = redis_store.get("dd.cart%s.count%s" % (cart_id, food_id))
@@ -146,6 +150,7 @@ def cart_data(cart_id):
 	return data
 
 def cart_patch(cart_id, food_id, count):
+	redis_store = get_redis_store()
 	redis_store.sadd("dd.cart%s" % cart_id, food_id)
 	k = "dd.cart%s.count%d" % (cart_id, food_id)
 	if redis_store.incrby(k, count) < 0:
@@ -154,9 +159,11 @@ def cart_patch(cart_id, food_id, count):
 # order relative #
 
 def user_order_id(user_id):
+	redis_store = get_redis_store()
 	return redis_store.get("dd.order%d" % user_id)
 
 def set_user_order_id(user_id, order_id):
+	redis_store = get_redis_store()
 	redis_store.set("dd.order%d" % user_id, order_id)
 
 def user_order(user_id):
@@ -176,6 +183,7 @@ def order_muti_foods(cart):
 		food_id = cart[i]['food_id']
 		count = cart[i]['count']
 		k = food_key(food_id)
+		redis_store = get_redis_store()
 		if redis_store.incrby(k, -count) < 0:
 			for j in range(0, i+1):				
 				redis_store.incrby(food_key(cart[j]['food_id'], cart[j]['count']))
@@ -186,6 +194,7 @@ def order_single_food(food):
 	food_id = food['food_id']
 	count = food['count']
 	k = food_key(food_id)
+	redis_store = get_redis_store()
 	if redis_store.incrby(k, -count) < 0:
 		redis_store.incrby(k, count)
 		return False
@@ -227,6 +236,7 @@ def get_foods():
 	# 	stock = food_field(food_id)
 	# 	price = food_field(food_id, "price")
 	# 	foods.append({"id": food_id, "stock": stock, "price": price})
+	redis_store = get_redis_store()
 	foods_json = redis_store.get('dd.food.json')
 	return my_response(foods_json)
 
@@ -248,8 +258,8 @@ def patch_carts(cart_id):
 		return data
 	if not cart_exists(cart_id):
 		return my_response({"code": "CART_NOT_FOUND", "message": "篮子不存在"}, 404, "Not Found")
-	if not cart_belongs(cart_id, user_id):
-		return my_response({"code": "NOT_AUTHORIZED_TO_ACCESS_CART", "message": "无权限访问指定的篮子"}, 401, "Unauthorized")
+	# if not cart_belongs(cart_id, user_id):
+		# return my_response({"code": "NOT_AUTHORIZED_TO_ACCESS_CART", "message": "无权限访问指定的篮子"}, 401, "Unauthorized")
 	food_id = int(data['food_id'])
 	count = data['count']
 	# 策略一 - 从数据库获取food信息，redis缓存
@@ -283,8 +293,8 @@ def make_orders():
 	cart_id = data['cart_id']
 	if not cart_exists(cart_id):
 		return my_response({"code": "CART_NOT_FOUND", "message": "篮子不存在"}, 404, "Not Found")
-	if not cart_belongs(cart_id, user_id):
-		return my_response({"code": "NOT_AUTHORIZED_TO_ACCESS_CART", "message": "无权限访问指定的篮子"}, 403, "Forbidden")
+	# if not cart_belongs(cart_id, user_id):
+		# return my_response({"code": "NOT_AUTHORIZED_TO_ACCESS_CART", "message": "无权限访问指定的篮子"}, 403, "Forbidden")
 	if user_order_id(user_id) != None:
 		return my_response({"code": "ORDER_OUT_OF_LIMIT", "message": "每个用户只能下一单"}, 403, "Forbidden")
 	cart = cart_data(cart_id)
@@ -345,6 +355,7 @@ def get_orders():
 @app.route('/admin/orders')
 def all_orders():
 	orders = []
+	redis_store = get_redis_store()
 	min_user_id = int(redis_store.hget('dd.user', 'min_id'))
 	max_user_id = int(redis_store.hget('dd.user', 'max_id'))
 	for i in range(min_user_id, max_user_id+1):

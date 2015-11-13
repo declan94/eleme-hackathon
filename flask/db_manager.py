@@ -12,11 +12,17 @@ db_pass = os.getenv("DB_PASS", "toor")
 redis_host = os.getenv('REDIS_HOST', "localhost")
 redis_port = int(os.getenv('REDIS_PORT', 6379))
 
+cached_myr = False
+
 def get_db():
 	db = DB(False, host = db_host, user = db_user, passwd = db_pass, db = db_name, port = db_port)
 	return db
 
 def get_redis_store():
+	global cached_myr
+	if cached_myr:
+		return cached_myr
 	myr = redis.Redis(host=redis_host, port=redis_port)
+	cached_myr = myr
 	return myr
 	
