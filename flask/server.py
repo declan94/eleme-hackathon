@@ -149,6 +149,10 @@ def cart_data(cart_id):
 		data.append({'food_id': int(food_id), 'count': count})
 	return data
 
+def cart_len(cart_id):
+	redis_store = get_redis_store()
+	return redis_store.scard("dd.cart%s" % cart_id)
+
 def cart_patch(cart_id, food_id, count):
 	redis_store = get_redis_store()
 	redis_store.sadd("dd.cart%s" % cart_id, food_id)
@@ -300,7 +304,8 @@ def make_orders():
 		# return my_response({"code": "NOT_AUTHORIZED_TO_ACCESS_CART", "message": "无权限访问指定的篮子"}, 403, "Forbidden")
 	if user_order_id(user_id) != None:
 		return my_response({"code": "ORDER_OUT_OF_LIMIT", "message": "每个用户只能下一单"}, 403, "Forbidden")
-	cart = cart_data(cart_id)
+	
+	# cart = cart_data(cart_id)
 
 	# 策略一 - 原始策略 - autocommit开
 	# db.execute("LOCK TABLE food WRITE")
@@ -331,9 +336,11 @@ def make_orders():
 
 	# 策略三 - 完全redis
 	
-	if len(cart) == 1:
+	if cart_len(cart_id) == 1:
+		cart = cart_data(cart_id)
 		ret = order_single_food(cart[0])
 	else:
+		cart = cart_data(cart_id)
 		# ret = order_muti_foods(cart)
 		ret = True
 
@@ -371,5 +378,5 @@ def all_orders():
 
 
 if __name__ == '__main__':
-	app.run(host=host, port=port, debug=True)
+	app.run(host=host, port=port, debug=False)
 
