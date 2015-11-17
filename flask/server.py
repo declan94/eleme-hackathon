@@ -121,7 +121,8 @@ def food_exists(food_id):
 
 def cart_new(user_id):
 	redis_store = get_redis_store()
-	cart_id = "%d" % redis_store.incr('dd.cart.id')
+	cart_id = "%f%d" % (time(), user_id)
+	# cart_id = "%d" % redis_store.incr('dd.cart.id')
 	# redis_store.set("dd.user%d.cart%s" % (user_id, cart_id), '1')
 	return cart_id
 
@@ -129,7 +130,7 @@ def cart_exists(cart_id):
 	# max_cart_id = int(redis_store.get('dd.cart.id'))
 	# cid = int(cart_id)
 	# return (cid >= 0 and cid <= max_cart_id)
-	return int(cart_id) >= 0
+	return float(cart_id) >= 0
 
 def cart_belongs(cart_id, user_id):
 	key = "dd.user%d.cart%s" %(user_id, cart_id)
