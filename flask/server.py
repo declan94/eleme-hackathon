@@ -120,7 +120,7 @@ def food_exists(food_id):
 # cart relative #
 
 def cart_new(user_id):
-	redis_store = get_redis_store()
+	# redis_store = get_redis_store()
 	cart_id = "%f%d" % (time(), user_id)
 	# cart_id = "%d" % redis_store.incr('dd.cart.id')
 	# redis_store.set("dd.user%d.cart%s" % (user_id, cart_id), '1')
