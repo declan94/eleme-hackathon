@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import sys
 import json
 import urlparse
 from time import time, sleep
@@ -9,12 +10,6 @@ from time import time, sleep
 from db_manager import get_db, get_redis_store
 
 from wsgiref.simple_server import make_server
-
-request = {
-	'data': None,
-	'Access-Token': None,
-	'args': {}
-}
 
 ############### special responses ###############
 
@@ -40,7 +35,7 @@ def unauthorized():
 
 ############### support functions ###############
 
-def check_data():
+def check_data(request):
 	data = request['data']
 	if not data:
 		return bad_req_1()
@@ -70,7 +65,7 @@ def check_login2(name, password):
 	access_token = "%d" % user_id
 	return (user_id, access_token)
 
-def authorize():
+def authorize(request):
 	args = request['args']
 	temp = args.get('access_token', False)
 	if temp and len(temp) > 0:
@@ -178,9 +173,9 @@ def order_single_food(food):
 
 ############### view functions ###############
 
-# /login
-def login():
-	data = check_data()
+# @app.route('/login', methods=["POST"])
+def login(request):
+	data = check_data(request)
 	if "status_code" in data:
 		return data
 	name = data.get('username', '')
@@ -194,28 +189,28 @@ def login():
 	else:
 		res_data = {"code": "USER_AUTH_FAIL", "message": "用户名或密码错误"}
 		return my_response(res_data, 403, "Forbidden")
-# /foods
-def get_foods():
-	user_id = authorize()
+# @app.route('/foods')
+def get_foods(request):
+	user_id = authorize(request)
 	if not isinstance(user_id, int):
 		return user_id
 	foods_json = '[{"price": 5, "id": 1, "stock": 1000}, {"price": 10, "id": 2, "stock": 1000}, {"price": 5, "id": 3, "stock": 1000}, {"price": 11, "id": 4, "stock": 1000}, {"price": 29, "id": 5, "stock": 1000}, {"price": 26, "id": 6, "stock": 1000}, {"price": 16, "id": 7, "stock": 1000}, {"price": 16, "id": 8, "stock": 1000}, {"price": 6, "id": 9, "stock": 1000}, {"price": 30, "id": 10, "stock": 1000}, {"price": 9, "id": 11, "stock": 1000}, {"price": 6, "id": 12, "stock": 1000}, {"price": 17, "id": 13, "stock": 1000}, {"price": 7, "id": 14, "stock": 1000}, {"price": 25, "id": 15, "stock": 1000}, {"price": 16, "id": 16, "stock": 1000}, {"price": 7, "id": 17, "stock": 1000}, {"price": 12, "id": 18, "stock": 1000}, {"price": 21, "id": 19, "stock": 1000}, {"price": 17, "id": 20, "stock": 1000}, {"price": 3, "id": 21, "stock": 1000}, {"price": 18, "id": 22, "stock": 1000}, {"price": 17, "id": 23, "stock": 1000}, {"price": 21, "id": 24, "stock": 1000}, {"price": 10, "id": 25, "stock": 1000}, {"price": 10, "id": 26, "stock": 1000}, {"price": 26, "id": 27, "stock": 1000}, {"price": 10, "id": 28, "stock": 1000}, {"price": 18, "id": 29, "stock": 1000}, {"price": 29, "id": 30, "stock": 1000}, {"price": 24, "id": 31, "stock": 1000}, {"price": 3, "id": 32, "stock": 1000}, {"price": 28, "id": 33, "stock": 1000}, {"price": 13, "id": 34, "stock": 1000}, {"price": 23, "id": 35, "stock": 1000}, {"price": 23, "id": 36, "stock": 1000}, {"price": 7, "id": 37, "stock": 1000}, {"price": 4, "id": 38, "stock": 1000}, {"price": 29, "id": 39, "stock": 1000}, {"price": 20, "id": 40, "stock": 1000}, {"price": 26, "id": 41, "stock": 1000}, {"price": 3, "id": 42, "stock": 1000}, {"price": 6, "id": 43, "stock": 1000}, {"price": 24, "id": 44, "stock": 1000}, {"price": 19, "id": 45, "stock": 1000}, {"price": 4, "id": 46, "stock": 1000}, {"price": 11, "id": 47, "stock": 1000}, {"price": 13, "id": 48, "stock": 1000}, {"price": 6, "id": 49, "stock": 1000}, {"price": 24, "id": 50, "stock": 1000}, {"price": 26, "id": 51, "stock": 1000}, {"price": 5, "id": 52, "stock": 1000}, {"price": 13, "id": 53, "stock": 1000}, {"price": 12, "id": 54, "stock": 1000}, {"price": 30, "id": 55, "stock": 1000}, {"price": 27, "id": 56, "stock": 1000}, {"price": 16, "id": 57, "stock": 1000}, {"price": 25, "id": 58, "stock": 1000}, {"price": 14, "id": 59, "stock": 1000}, {"price": 16, "id": 60, "stock": 1000}, {"price": 15, "id": 61, "stock": 1000}, {"price": 9, "id": 62, "stock": 1000}, {"price": 10, "id": 63, "stock": 1000}, {"price": 13, "id": 64, "stock": 1000}, {"price": 26, "id": 65, "stock": 1000}, {"price": 29, "id": 66, "stock": 1000}, {"price": 16, "id": 67, "stock": 1000}, {"price": 4, "id": 68, "stock": 1000}, {"price": 8, "id": 69, "stock": 1000}, {"price": 29, "id": 70, "stock": 1000}, {"price": 16, "id": 71, "stock": 1000}, {"price": 19, "id": 72, "stock": 1000}, {"price": 3, "id": 73, "stock": 1000}, {"price": 24, "id": 74, "stock": 1000}, {"price": 8, "id": 75, "stock": 1000}, {"price": 10, "id": 76, "stock": 1000}, {"price": 26, "id": 77, "stock": 1000}, {"price": 22, "id": 78, "stock": 1000}, {"price": 3, "id": 79, "stock": 1000}, {"price": 3, "id": 80, "stock": 1000}, {"price": 10, "id": 81, "stock": 1000}, {"price": 30, "id": 82, "stock": 1000}, {"price": 15, "id": 83, "stock": 1000}, {"price": 22, "id": 84, "stock": 1000}, {"price": 28, "id": 85, "stock": 1000}, {"price": 3, "id": 86, "stock": 1000}, {"price": 17, "id": 87, "stock": 1000}, {"price": 22, "id": 88, "stock": 1000}, {"price": 16, "id": 89, "stock": 1000}, {"price": 14, "id": 90, "stock": 1000}, {"price": 8, "id": 91, "stock": 1000}, {"price": 25, "id": 92, "stock": 1000}, {"price": 21, "id": 93, "stock": 1000}, {"price": 22, "id": 94, "stock": 1000}, {"price": 11, "id": 95, "stock": 1000}, {"price": 5, "id": 96, "stock": 1000}, {"price": 17, "id": 97, "stock": 1000}, {"price": 27, "id": 98, "stock": 1000}, {"price": 11, "id": 99, "stock": 1000}, {"price": 8, "id": 100, "stock": 1000}]'
 	return my_response(foods_json)
 
-# /carts POST
-def new_carts():
-	user_id = authorize()
+# @app.route('/carts', methods=["POST"])
+def new_carts(request):
+	user_id = authorize(request)
 	if not isinstance(user_id, int):
 		return user_id
 	cart_id = cart_new(user_id)
 	return my_response({'cart_id': cart_id})
 
-# /carts/<cart_id> PATCH
-def patch_carts(cart_id):
-	user_id = authorize()
+# @app.route('/carts/<cart_id>', methods=["PATCH"])
+def patch_carts(request, cart_id):
+	user_id = authorize(request)
 	if not isinstance(user_id, int):
 		return user_id
-	data = check_data()
+	data = check_data(request)
 	if "status_code" in data:
 		return data
 	if not cart_exists(cart_id):
@@ -245,13 +240,15 @@ def patch_carts(cart_id):
 	return my_response(None, 204, "No content")
 
 # @app.route('/orders', methods=["POST"])
-def make_orders():
-	user_id = authorize()
+def make_orders(request):
+	user_id = authorize(request)
 	if not isinstance(user_id, int):
 		return user_id
-	data = check_data()
+	data = check_data(request)
 	if "status_code" in data:
 		return data
+	if not "cart_id" in data:
+		sys.stderr.write("NO cart_id! " + str(data))
 	cart_id = data['cart_id']
 	if not cart_exists(cart_id):
 		return my_response({"code": "CART_NOT_FOUND", "message": "篮子不存在"}, 404, "Not Found")
@@ -307,8 +304,8 @@ def make_orders():
 	return my_response({"id": order_id})
 
 # @app.route('/orders')
-def get_orders():
-	user_id = authorize()
+def get_orders(request):
+	user_id = authorize(request)
 	if not isinstance(user_id, int):
 		return user_id
 	order = user_order(user_id)
@@ -318,7 +315,7 @@ def get_orders():
 		return my_response([order])
 
 # @app.route('/admin/orders')
-def all_orders():
+def all_orders(request):
 	orders = []
 	redis_store = get_redis_store()
 	min_user_id = int(redis_store.hget('dd.user', 'min_id'))
@@ -332,6 +329,13 @@ def all_orders():
 
 
 def try_app(environ, start_response):
+
+	request = {
+		'data': None,
+		'Access-Token': None,
+		'args': {}
+	}
+
 	try:
 		request_body_size = int(environ.get('CONTENT_LENGTH', 0))
 	except (ValueError):
@@ -341,32 +345,25 @@ def try_app(environ, start_response):
 	request['args'] = urlparse.parse_qs(environ.get('QUERY_STRING', ''))
 	
 	path = environ['PATH_INFO'].strip()
-	method = environ['REQUEST_METHOD']
-	func = None
-	param = None
+	method = environ['REQUEST_METHOD'].strip()
 	funcs = {
 		'/login': login,
 		'/foods': get_foods,
 		'/admin/orders': all_orders
 	}
 	if path in funcs:
-		func = funcs[path]
+		r = funcs[path](request)
 	else:
 		if path[:6] == '/carts':
 			if method == 'POST':
-				func = new_carts
+				r = new_carts(request)
 			else:
-				func = patch_carts
-				param = path[7:]
+				r = patch_carts(request, path[7:])
 		if path[:7] == '/orders':
 			if method == 'POST':
-				func = make_orders
+				r = make_orders(request)
 			else:
-				func = get_orders
-	if param:
-		r = func(param)
-	else:
-		r = func()
+				r = get_orders(request)
 	status = "%d %s" % (r['status_code'], r['status'])
 	response_body = r.get('data', '')
 	response_headers = [('Content-Type', 'application/json'), 
