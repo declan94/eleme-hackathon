@@ -1,0 +1,6 @@
+language: py2
+script:
+  - apt-get install libmysqlclient-dev -y
+  - pip install -r requirements-py-gunicorn.txt
+  - python py/init_db.py
+  - cd py && gunicorn -k gevent -b $APP_HOST:$APP_PORT -w 8 server:app
