@@ -71,11 +71,12 @@ def check_login2(name, password):
 	return (user_id, access_token)
 
 def authorize():
-	if request.get('Access-Token', False):
-		access_token = request.get('Access-Token')
+	args = request['args']
+	temp = args.get('access_token', False)
+	if temp and len(temp) > 0:
+		access_token = temp[0]
 	else:
-		args = request['args']
-		access_token = args.get('access_token', False)
+		access_token = request.get('Access-Token')
 		if not access_token:
 			return unauthorized()
 	return int(access_token)
@@ -379,9 +380,9 @@ def app(environ, start_response):
 	# 	return try_app(environ, start_response)
 	# except:
 	# 	status = "500 Oops"
- #    	response_headers = [("content-type", "text/plain")]
- #    	start_response(status, response_headers, sys.exc_info())
- #    	return ["error body goes here"]
+	# 	response_headers = [("content-type", "text/plain")]
+	# 	start_response(status, response_headers, sys.exc_info())
+	# 	return ["error body goes here"]
 
 
 if __name__ == '__main__':
