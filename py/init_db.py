@@ -30,14 +30,12 @@ myr.hset('dd.user', 'min_id', min_user_id)
 myr.hset('dd.user', 'max_id', max_user_id)
 myr.set('dd.food.json', json.dumps(all_foods))
 
-for i in range(0, len(all_foods)):
-	f = all_foods[i]
+for f in all_foods:
 	myr.set("dd.food%d.stock" % f['id'], f['stock'])
 	myr.set("dd.food%d.price" % f['id'], f['price'])
 
-for i in range(0, len(all_users)):
-	u = all_users[i]
-	myr.set("dd.user%s.password%s" % (u[1], u[2]), u[0])
+# for u in all_users:
+# 	myr.set("dd.user%s.password%s" % (u[1], u[2]), u[0])
 	# myr.hset("dd.user%s" % u[1], "password", u[2])
 	# myr.hset("dd.user%s" % u[1], "id", u[0])
 

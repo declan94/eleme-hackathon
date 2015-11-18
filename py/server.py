@@ -2,14 +2,14 @@
 # -*- coding: utf-8 -*-
 
 import os
-import sys
 import json
 import urlparse
 from time import time, sleep
-
+from wsgiref.simple_server import make_server
 from db_manager import get_db, get_redis_store
 
-from wsgiref.simple_server import make_server
+import cache
+cache.cache_users_data()
 
 ############### special responses ###############
 
@@ -49,6 +49,14 @@ def check_data(request):
 
 # authorize relative
 def check_login(name, password):
+	user_id = cache.check_user(name, password)
+	if user_id == None:
+		return False
+	access_token = str(user_id)
+	return (user_id, access_token)
+
+# authorize relative
+def check_login1(name, password):
 	redis_store = get_redis_store()
 	access_token = redis_store.get("dd.user%s.password%s" % (name, password))
 	if access_token == None:
@@ -129,12 +137,18 @@ def cart_patch(cart_id, food_id, count):
 # order relative #
 
 def user_order_id(user_id):
+	k = "dd.order%d" % user_id
+	# order_id = cache.get(k)
+	# if order_id:
+	# 	return order_id
 	redis_store = get_redis_store()
-	return redis_store.get("dd.order%d" % user_id)
+	return redis_store.get(k)
 
 def set_user_order_id(user_id, order_id):
+	k = "dd.order%d" % user_id
+	# cache.cache(k, order_id)
 	redis_store = get_redis_store()
-	redis_store.set("dd.order%d" % user_id, order_id)
+	redis_store.set(k, order_id)
 
 def user_order(user_id):
 	order_id = user_order_id(user_id)
@@ -247,8 +261,6 @@ def make_orders(request):
 	data = check_data(request)
 	if "status_code" in data:
 		return data
-	if not "cart_id" in data:
-		sys.stderr.write("NO cart_id! " + str(data))
 	cart_id = data['cart_id']
 	if not cart_exists(cart_id):
 		return my_response({"code": "CART_NOT_FOUND", "message": "篮子不存在"}, 404, "Not Found")

@@ -3,6 +3,7 @@
 import os
 from DB import DB
 import redis
+import sys
 
 db_host = os.getenv("DB_HOST", "localhost")
 db_port = int(os.getenv("DB_PORT", 3306))
