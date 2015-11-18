@@ -10,6 +10,7 @@ from db_manager import get_db, get_redis_store
 
 import cache
 cache.cache_users_data()
+cache.cache_foods_data()
 
 ############### special responses ###############
 
@@ -94,7 +95,9 @@ def food_field(food_id, field = "stock"):
 	return int(redis_store.get(food_key(food_id, field)))
 
 def food_exists(food_id):
-	return food_id > 0
+	min_id = cache.food_min_id()
+	max_id = cache.food_max_id()
+	return food_id >= min_id and food_id <= max_id
 
 # cart relative #
 
@@ -111,9 +114,13 @@ def cart_belongs(cart_id, user_id):
 	return  redis_store.get(key) == '1'
 
 def cart_data(cart_id):
+	k = "dd.cart%s" % cart_id
+	# data = cache.get(k)
+	# if data:
+	# 	return data
 	data = []
 	redis_store = get_redis_store()
-	fid_set = redis_store.smembers("dd.cart%s" % cart_id)
+	fid_set = redis_store.smembers(k)
 	for food_id in fid_set:
 		count = redis_store.get("dd.cart%s.count%s" % (cart_id, food_id))
 		if count:
@@ -121,6 +128,7 @@ def cart_data(cart_id):
 		else:
 			count = 0
 		data.append({'food_id': int(food_id), 'count': count})
+	# cache.cache(k, data)
 	return data
 
 def cart_len(cart_id):
@@ -128,25 +136,27 @@ def cart_len(cart_id):
 	return redis_store.scard("dd.cart%s" % cart_id)
 
 def cart_patch(cart_id, food_id, count):
+	k = "dd.cart%s" % cart_id
+	# cache.cache(k, None)
 	redis_store = get_redis_store()
-	redis_store.sadd("dd.cart%s" % cart_id, food_id)
-	k = "dd.cart%s.count%d" % (cart_id, food_id)
-	if redis_store.incrby(k, count) < 0:
-		redis_store.set(k, 0)
+	redis_store.sadd(k, food_id)
+	k2 = "dd.cart%s.count%d" % (cart_id, food_id)
+	if redis_store.incrby(k2, count) < 0:
+		redis_store.set(k2, 0)
 	
 # order relative #
 
 def user_order_id(user_id):
 	k = "dd.order%d" % user_id
-	# order_id = cache.get(k)
-	# if order_id:
-	# 	return order_id
+	order_id = cache.get(k)
+	if order_id:
+		return order_id
 	redis_store = get_redis_store()
 	return redis_store.get(k)
 
 def set_user_order_id(user_id, order_id):
 	k = "dd.order%d" % user_id
-	# cache.cache(k, order_id)
+	cache.cache(k, order_id)
 	redis_store = get_redis_store()
 	redis_store.set(k, order_id)
 
@@ -203,12 +213,13 @@ def login(request):
 	else:
 		res_data = {"code": "USER_AUTH_FAIL", "message": "用户名或密码错误"}
 		return my_response(res_data, 403, "Forbidden")
+
 # @app.route('/foods')
 def get_foods(request):
 	user_id = authorize(request)
 	if not isinstance(user_id, int):
 		return user_id
-	foods_json = '[{"price": 5, "id": 1, "stock": 1000}, {"price": 10, "id": 2, "stock": 1000}, {"price": 5, "id": 3, "stock": 1000}, {"price": 11, "id": 4, "stock": 1000}, {"price": 29, "id": 5, "stock": 1000}, {"price": 26, "id": 6, "stock": 1000}, {"price": 16, "id": 7, "stock": 1000}, {"price": 16, "id": 8, "stock": 1000}, {"price": 6, "id": 9, "stock": 1000}, {"price": 30, "id": 10, "stock": 1000}, {"price": 9, "id": 11, "stock": 1000}, {"price": 6, "id": 12, "stock": 1000}, {"price": 17, "id": 13, "stock": 1000}, {"price": 7, "id": 14, "stock": 1000}, {"price": 25, "id": 15, "stock": 1000}, {"price": 16, "id": 16, "stock": 1000}, {"price": 7, "id": 17, "stock": 1000}, {"price": 12, "id": 18, "stock": 1000}, {"price": 21, "id": 19, "stock": 1000}, {"price": 17, "id": 20, "stock": 1000}, {"price": 3, "id": 21, "stock": 1000}, {"price": 18, "id": 22, "stock": 1000}, {"price": 17, "id": 23, "stock": 1000}, {"price": 21, "id": 24, "stock": 1000}, {"price": 10, "id": 25, "stock": 1000}, {"price": 10, "id": 26, "stock": 1000}, {"price": 26, "id": 27, "stock": 1000}, {"price": 10, "id": 28, "stock": 1000}, {"price": 18, "id": 29, "stock": 1000}, {"price": 29, "id": 30, "stock": 1000}, {"price": 24, "id": 31, "stock": 1000}, {"price": 3, "id": 32, "stock": 1000}, {"price": 28, "id": 33, "stock": 1000}, {"price": 13, "id": 34, "stock": 1000}, {"price": 23, "id": 35, "stock": 1000}, {"price": 23, "id": 36, "stock": 1000}, {"price": 7, "id": 37, "stock": 1000}, {"price": 4, "id": 38, "stock": 1000}, {"price": 29, "id": 39, "stock": 1000}, {"price": 20, "id": 40, "stock": 1000}, {"price": 26, "id": 41, "stock": 1000}, {"price": 3, "id": 42, "stock": 1000}, {"price": 6, "id": 43, "stock": 1000}, {"price": 24, "id": 44, "stock": 1000}, {"price": 19, "id": 45, "stock": 1000}, {"price": 4, "id": 46, "stock": 1000}, {"price": 11, "id": 47, "stock": 1000}, {"price": 13, "id": 48, "stock": 1000}, {"price": 6, "id": 49, "stock": 1000}, {"price": 24, "id": 50, "stock": 1000}, {"price": 26, "id": 51, "stock": 1000}, {"price": 5, "id": 52, "stock": 1000}, {"price": 13, "id": 53, "stock": 1000}, {"price": 12, "id": 54, "stock": 1000}, {"price": 30, "id": 55, "stock": 1000}, {"price": 27, "id": 56, "stock": 1000}, {"price": 16, "id": 57, "stock": 1000}, {"price": 25, "id": 58, "stock": 1000}, {"price": 14, "id": 59, "stock": 1000}, {"price": 16, "id": 60, "stock": 1000}, {"price": 15, "id": 61, "stock": 1000}, {"price": 9, "id": 62, "stock": 1000}, {"price": 10, "id": 63, "stock": 1000}, {"price": 13, "id": 64, "stock": 1000}, {"price": 26, "id": 65, "stock": 1000}, {"price": 29, "id": 66, "stock": 1000}, {"price": 16, "id": 67, "stock": 1000}, {"price": 4, "id": 68, "stock": 1000}, {"price": 8, "id": 69, "stock": 1000}, {"price": 29, "id": 70, "stock": 1000}, {"price": 16, "id": 71, "stock": 1000}, {"price": 19, "id": 72, "stock": 1000}, {"price": 3, "id": 73, "stock": 1000}, {"price": 24, "id": 74, "stock": 1000}, {"price": 8, "id": 75, "stock": 1000}, {"price": 10, "id": 76, "stock": 1000}, {"price": 26, "id": 77, "stock": 1000}, {"price": 22, "id": 78, "stock": 1000}, {"price": 3, "id": 79, "stock": 1000}, {"price": 3, "id": 80, "stock": 1000}, {"price": 10, "id": 81, "stock": 1000}, {"price": 30, "id": 82, "stock": 1000}, {"price": 15, "id": 83, "stock": 1000}, {"price": 22, "id": 84, "stock": 1000}, {"price": 28, "id": 85, "stock": 1000}, {"price": 3, "id": 86, "stock": 1000}, {"price": 17, "id": 87, "stock": 1000}, {"price": 22, "id": 88, "stock": 1000}, {"price": 16, "id": 89, "stock": 1000}, {"price": 14, "id": 90, "stock": 1000}, {"price": 8, "id": 91, "stock": 1000}, {"price": 25, "id": 92, "stock": 1000}, {"price": 21, "id": 93, "stock": 1000}, {"price": 22, "id": 94, "stock": 1000}, {"price": 11, "id": 95, "stock": 1000}, {"price": 5, "id": 96, "stock": 1000}, {"price": 17, "id": 97, "stock": 1000}, {"price": 27, "id": 98, "stock": 1000}, {"price": 11, "id": 99, "stock": 1000}, {"price": 8, "id": 100, "stock": 1000}]'
+	foods_json = cache.food_json()
 	return my_response(foods_json)
 
 # @app.route('/carts', methods=["POST"])
@@ -233,11 +244,6 @@ def patch_carts(request, cart_id):
 		# return my_response({"code": "NOT_AUTHORIZED_TO_ACCESS_CART", "message": "无权限访问指定的篮子"}, 401, "Unauthorized")
 	food_id = int(data['food_id'])
 	count = data['count']
-	# 策略一 - 从数据库获取food信息，redis缓存
-	# food = get_food(food_id)
-	# if not food:
-		# return my_response({"code": "FOOD_NOT_FOUND", "message": "食物不存在"}, 404, "Not Found")
-	# 策略二 - 设定food_id连续，根据food_id大小判定
 	if not food_exists(food_id):
 		return my_response({"code": "FOOD_NOT_FOUND", "message": "食物不存在"}, 404, "Not Found")
 	total = count
@@ -269,42 +275,11 @@ def make_orders(request):
 	if user_order_id(user_id) != None:
 		return my_response({"code": "ORDER_OUT_OF_LIMIT", "message": "每个用户只能下一单"}, 403, "Forbidden")
 	
-	# cart = cart_data(cart_id)
-
-	# 策略一 - 原始策略 - autocommit开
-	# db.execute("LOCK TABLE food WRITE")
-	# for i in range(0, len(cart)):
-	# 	item = cart[i]
-	# 	food = get_food(item['food_id'], False)
-	# 	if food['stock'] < item['count']:
-	# 		db.execute("UNLOCK TABLE")
-	# 		return my_response({"code": "FOOD_OUT_OF_STOCK", "message": "食物库存不足"}, 403, "Forbidden")
-	# 	item['stock'] = food['stock']
-	# for i in range(0, len(cart)):
-	# 	item = cart[i]
-	# 	new_stock = item['stock'] - item['count']
-	# 	db.update("food", {"stock": new_stock}, {"id": item['food_id']})
-	# db.execute("UNLOCK TABLE")
-
-	# 策略二 - autocommit 关
-	# db = get_db()
-	# for i in range(0, len(cart)):
-	# 	item = cart[i]
-	# 	sql = "update `food` set stock = stock - %d where id = %d and stock >= %d" % (item['count'], item['food_id'], item['count'])
-	# 	db.execute(sql)
-	# 	if db.affected_rows() == 0:
-	# 		db.rollback()
-	# 		return my_response({"code": "FOOD_OUT_OF_STOCK", "message": "食物库存不足"}, 403, "Forbidden")
-	# db.commit()
-	# db.close()
-
-	# 策略三 - 完全redis
-	
 	if cart_len(cart_id) == 1:
 		cart = cart_data(cart_id)
 		ret = order_single_food(cart[0])
 	else:
-		cart = cart_data(cart_id)
+		# cart = cart_data(cart_id)
 		# ret = order_muti_foods(cart)
 		ret = True
 
@@ -330,8 +305,8 @@ def get_orders(request):
 def all_orders(request):
 	orders = []
 	redis_store = get_redis_store()
-	min_user_id = int(redis_store.hget('dd.user', 'min_id'))
-	max_user_id = int(redis_store.hget('dd.user', 'max_id'))
+	min_user_id = cache.user_min_id()
+	max_user_id = cache.user_max_id()
 	for i in range(min_user_id, max_user_id+1):
 		user_id = users[i][0]
 		order = user_order(user_id)

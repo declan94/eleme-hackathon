@@ -18,7 +18,7 @@ rows = db.select('select max(id) from user')
 max_user_id = rows[0][0]
 
 all_foods = db.select('select * from food', is_dict=True)
-all_users = db.select('select * from user')
+# all_users = db.select('select * from user')
 
 db.close()
 
