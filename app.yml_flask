@@ -1,0 +1,6 @@
+language: py2
+script:
+  - apt-get install libmysqlclient-dev -y
+  - pip install -r requirements.txt
+  - python flask/init_db.py
+  - cd flask && uwsgi --http-socket=$APP_HOST:$APP_PORT --module=server --callable=app --processes=2 --threads=20
