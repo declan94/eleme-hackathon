@@ -160,7 +160,7 @@ def user_order(user_id):
 	if not order_id:
 		return None
 	cart = cart_data(order_id)
-	total = sum([food_field(item['food_id'], 'price') * item['count'] for item in cart])
+	total = sum([cache.food_price(item['food_id']) * item['count'] for item in cart])
 	return {"id": order_id, "items": cart, "total": total}
 
 def order_muti_foods(cart):

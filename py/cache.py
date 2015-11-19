@@ -2,6 +2,7 @@
 
 from db_manager import get_db, get_redis_store
 import sys
+import json
 
 cache_data = {}
 
@@ -28,6 +29,11 @@ def cache_foods_data():
 	cache('dd.food.min_id', int(r.hget('dd.food', 'min_id')))
 	cache('dd.food.max_id', int(r.hget('dd.food', 'max_id')))
 	cache('dd.food.json', r.get('dd.food.json'))
+	db = get_db()
+	all_foods = db.select('select * from food')
+	db.close()
+	for f in all_foods:
+		cache("dd.food%d.price" % f[0], f[2])
 
 def check_user(name, password):
 	user_id = get("dd.user%s.password%s" % (name, password))
@@ -47,6 +53,9 @@ def food_min_id():
 
 def food_max_id():
 	return get('dd.food.max_id')
+
+def food_price(food_id):
+	return get("dd.food%d.price" % food_id)
 
 
 
