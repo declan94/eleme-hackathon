@@ -129,13 +129,13 @@ def set_user_order_id(user_id, order_id):
 	redis_store = get_redis_store()
 	redis_store.set(k, order_id)
 
-def user_order(user_id):
+def user_orders(user_id):
 	order_id = user_order_id(user_id)
 	if not order_id:
-		return None
+		return []
 	cart = cart_data(order_id)
 	total = sum([cache.food_price(item['food_id']) * item['count'] for item in cart])
-	return {"id": order_id, "items": cart, "total": total}
+	return [{"id": order_id, "items": cart, "total": total}]
 
 def order_muti_foods(cart):
 	for i in range(0, len(cart)):
@@ -205,7 +205,7 @@ def patch_carts(request, cart_id):
 		return my_response({"code": "CART_NOT_FOUND", "message": "篮子不存在"}, 404, "Not Found")
 	# if not cart_belongs(cart_id, user_id):
 		# return my_response({"code": "NOT_AUTHORIZED_TO_ACCESS_CART", "message": "无权限访问指定的篮子"}, 401, "Unauthorized")
-	food_id = int(data['food_id'])
+	food_id = data['food_id']
 	count = data['count']
 	if not food_exists(food_id):
 		return my_response({"code": "FOOD_NOT_FOUND", "message": "食物不存在"}, 404, "Not Found")
@@ -218,8 +218,9 @@ def patch_carts(request, cart_id):
 	# 		total = total + old[i]['count']
 	# 		if total > 3:
 	# 			return my_response({"code": "FOOD_OUT_OF_LIMIT", "message": "篮子中食物数量超过了三个"}, 403, "Forbidden");
-	if not user_order_id(user_id):
-		cart_patch(cart_id, food_id, count)
+	
+	# if not user_order_id(user_id):
+	cart_patch(cart_id, food_id, count)
 	return my_response(None, 204, "No content")
 
 # @app.route('/orders', methods=["POST"])
@@ -258,11 +259,7 @@ def get_orders(request):
 	user_id = authorize(request)
 	if not isinstance(user_id, int):
 		return user_id
-	order = user_order(user_id)
-	if not order:
-		return my_response([])
-	else:
-		return my_response([order])
+	return my_response(user_orders(user_id))
 
 # @app.route('/admin/orders')
 def all_orders(request):
@@ -271,9 +268,7 @@ def all_orders(request):
 	min_user_id = cache.user_min_id()
 	max_user_id = cache.user_max_id()
 	for user_id in range(min_user_id, max_user_id+1):
-		order = user_order(user_id)
-		if order:
-			orders.append(order)
+		orders.extend(user_orders(user_id))
 	return my_response(orders)
 
 
