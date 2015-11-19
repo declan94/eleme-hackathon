@@ -37,7 +37,7 @@ def unauthorized():
 ############### support functions ###############
 
 def check_data(request):
-	data = request['data']
+	data = request.get('data', None)
 	if not data:
 		return bad_req_1()
 	else:
@@ -295,19 +295,19 @@ def try_app(environ, start_response):
 		'/foods': get_foods,
 		'/admin/orders': all_orders
 	}
-	if path in funcs:
-		r = funcs[path](request)
+	if path[:6] == '/carts':
+		if method == 'POST':
+			r = new_carts(request)
+		else:
+			r = patch_carts(request, path[7:])
 	else:
-		if path[:6] == '/carts':
-			if method == 'POST':
-				r = new_carts(request)
-			else:
-				r = patch_carts(request, path[7:])
 		if path[:7] == '/orders':
 			if method == 'POST':
 				r = make_orders(request)
 			else:
 				r = get_orders(request)
+		else:
+			r = funcs.get(path, login)(request)	
 	status = "%d %s" % (r['status_code'], r['status'])
 	response_body = r.get('data', '')
 	response_headers = [('Content-Type', 'application/json'), 
