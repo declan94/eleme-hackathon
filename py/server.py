@@ -48,23 +48,6 @@ def check_data(request):
 		else:
 			return data
 
-# authorize relative
-def check_login(name, password):
-	user_id = cache.check_user(name, password)
-	if user_id == None:
-		return False
-	access_token = str(user_id)
-	return (user_id, access_token)
-
-# authorize relative
-def check_login1(name, password):
-	redis_store = get_redis_store()
-	access_token = redis_store.get("dd.user%s.password%s" % (name, password))
-	if access_token == None:
-		return False
-	user_id = int(access_token)
-	return (user_id, access_token)
-
 def authorize(request):
 	args = request['args']
 	temp = args.get('access_token', False)
@@ -186,11 +169,9 @@ def login(request):
 		return data
 	name = data.get('username', '')
 	password = data.get('password', '')
-	check = check_login(name, password)
-	if check != False:
-		user_id = check[0]
-		access_token = check[1]
-		res_data = {'user_id': user_id, 'username': name, 'access_token': access_token}
+	user_id = cache.check_user(name, password)
+	if user_id != None:
+		res_data = {'user_id': user_id, 'username': name, 'access_token': str(user_id)}
 		return my_response(res_data)
 	else:
 		res_data = {"code": "USER_AUTH_FAIL", "message": "用户名或密码错误"}
