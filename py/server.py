@@ -65,15 +65,6 @@ def check_login1(name, password):
 	user_id = int(access_token)
 	return (user_id, access_token)
 
-def check_login2(name, password):
-	db = get_db()
-	row = db.select("select id from user where name='%s' and password='%s' limit 1" % (name, password))
-	if not row or len(row) == 0:
-		return False
-	user_id = row[0][0]
-	access_token = "%d" % user_id
-	return (user_id, access_token)
-
 def authorize(request):
 	args = request['args']
 	temp = args.get('access_token', False)

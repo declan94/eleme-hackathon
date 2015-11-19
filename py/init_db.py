@@ -32,7 +32,7 @@ myr.set('dd.food.json', json.dumps(all_foods))
 
 for f in all_foods:
 	myr.set("dd.food%d.stock" % f['id'], f['stock'])
-	myr.set("dd.food%d.price" % f['id'], f['price'])
+	# myr.set("dd.food%d.price" % f['id'], f['price'])
 
 # for u in all_users:
 # 	myr.set("dd.user%s.password%s" % (u[1], u[2]), u[0])
