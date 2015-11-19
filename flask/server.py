@@ -369,8 +369,7 @@ def all_orders():
 	redis_store = get_redis_store()
 	min_user_id = int(redis_store.hget('dd.user', 'min_id'))
 	max_user_id = int(redis_store.hget('dd.user', 'max_id'))
-	for i in range(min_user_id, max_user_id+1):
-		user_id = users[i][0]
+	for user_id in range(min_user_id, max_user_id+1):
 		order = user_order(user_id)
 		if order:
 			orders.append(order)

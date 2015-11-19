@@ -121,13 +121,8 @@ def cart_data(cart_id):
 	data = []
 	redis_store = get_redis_store()
 	fid_set = redis_store.smembers(k)
-	for food_id in fid_set:
-		count = redis_store.get("dd.cart%s.count%s" % (cart_id, food_id))
-		if count:
-			count = int(count)
-		else:
-			count = 0
-		data.append({'food_id': int(food_id), 'count': count})
+	data = [{'food_id': int(food_id), 'count': int(redis_store.get("dd.cart%s.count%s" % (cart_id, food_id)))} 
+		for food_id in fid_set]
 	# cache.cache(k, data)
 	return data
 
@@ -164,13 +159,9 @@ def user_order(user_id):
 	order_id = user_order_id(user_id)
 	if not order_id:
 		return None
-	items = cart_data(order_id)
-	total = 0
-	for i in range(0, len(items)):
-		item = items[i]
-		price = food_field(item['food_id'], 'price')
-		total = total + price * item['count']
-	return {"id": order_id, "items": items, "total": total}
+	cart = cart_data(order_id)
+	total = sum([food_field(item['food_id'], 'price') * item['count'] for item in cart])
+	return {"id": order_id, "items": cart, "total": total}
 
 def order_muti_foods(cart):
 	for i in range(0, len(cart)):
@@ -307,8 +298,7 @@ def all_orders(request):
 	redis_store = get_redis_store()
 	min_user_id = cache.user_min_id()
 	max_user_id = cache.user_max_id()
-	for i in range(min_user_id, max_user_id+1):
-		user_id = users[i][0]
+	for user_id in range(min_user_id, max_user_id+1):
 		order = user_order(user_id)
 		if order:
 			orders.append(order)
