@@ -290,11 +290,6 @@ def try_app(environ, start_response):
 	
 	path = environ['PATH_INFO'].strip()
 	method = environ['REQUEST_METHOD'].strip()
-	funcs = {
-		'/login': login,
-		'/foods': get_foods,
-		'/admin/orders': all_orders
-	}
 	if path[:6] == '/carts':
 		if method == 'POST':
 			r = new_carts(request)
@@ -307,6 +302,11 @@ def try_app(environ, start_response):
 			else:
 				r = get_orders(request)
 		else:
+			funcs = {
+				'/login': login,
+				'/foods': get_foods,
+				'/admin/orders': all_orders
+			}
 			r = funcs.get(path, login)(request)	
 	status = "%d %s" % (r['status_code'], r['status'])
 	response_body = r.get('data', '')
