@@ -69,9 +69,10 @@ def food_field(food_id, field = "stock"):
 	return int(redis_store.get(food_key(food_id, field)))
 
 def food_exists(food_id):
-	min_id = cache.food_min_id()
-	max_id = cache.food_max_id()
-	return food_id >= min_id and food_id <= max_id
+	# min_id = cache.food_min_id()
+	# max_id = cache.food_max_id()
+	# return food_id >= min_id and food_id <= max_id
+	return food_id > 0
 
 # cart relative #
 
