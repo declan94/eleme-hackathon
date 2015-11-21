@@ -242,9 +242,9 @@ def make_orders(request):
 		cart = cart_data(cart_id)
 		ret = order_single_food(cart[0])
 	else:
+		return my_response({"id": cart_id})
 		# cart = cart_data(cart_id)
 		# ret = order_muti_foods(cart)
-		ret = True
 
 	if not ret:
 		return my_response({"code": "FOOD_OUT_OF_STOCK", "message": "食物库存不足"}, 403, "Forbidden")
