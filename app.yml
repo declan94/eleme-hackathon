@@ -3,4 +3,4 @@ script:
   - apt-get install libmysqlclient-dev -y
   - pip install -r requirements-py.txt
   - python py/init_db.py
-  - cd py && uwsgi --http-socket=$APP_HOST:$APP_PORT --module=server --callable=app --processes=2 --threads=20 -L
+  - cd py && uwsgi --http-socket=$APP_HOST:$APP_PORT --module=server --callable=app --processes=1 --threads=1 -L
