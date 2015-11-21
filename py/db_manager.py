@@ -24,7 +24,7 @@ def get_redis_store():
 	global cached_myr
 	if cached_myr:
 		return cached_myr
-	myr = redis.StrictRedis(connection_pool=redis_pool)
+	myr = redis.Redis(connection_pool=redis_pool)
 	cached_myr = myr
 	return myr
 	
