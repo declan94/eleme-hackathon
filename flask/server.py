@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import sys
 from time import time, sleep
 
 from flask import Flask
@@ -15,6 +16,7 @@ host = os.getenv("APP_HOST", "localhost")
 port = int(os.getenv("APP_PORT", "8080"))
 
 app = Flask(__name__)
+
 
 @app.route('/')
 def hello_world():

@@ -4,6 +4,7 @@ from db_manager import get_db, get_redis_store
 import sys
 import json
 
+
 cache_data = {}
 user_cache = {}
 food_cache = {}
