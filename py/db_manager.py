@@ -14,7 +14,7 @@ redis_host = os.getenv('REDIS_HOST', "localhost")
 redis_port = int(os.getenv('REDIS_PORT', 6379))
 
 cached_myr = False
-redis_pool = redis.ConnectionPool(host = redis_host, port = redis_port)
+redis_pool = redis.ConnectionPool(host = redis_host, port = redis_port, db = 0)
 
 def get_db():
 	db = DB(False, host = db_host, user = db_user, passwd = db_pass, db = db_name, port = db_port)

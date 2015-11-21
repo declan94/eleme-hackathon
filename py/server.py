@@ -90,15 +90,11 @@ def cart_belongs(cart_id, user_id):
 
 def cart_data(cart_id):
 	k = "dd.cart%s" % cart_id
-	# data = cache.get(k)
-	# if data:
-	# 	return data
 	data = []
 	redis_store = get_redis_store()
 	fid_set = redis_store.smembers(k)
 	data = [{'food_id': int(food_id), 'count': int(redis_store.get("dd.cart%s.count%s" % (cart_id, food_id)))} 
 		for food_id in fid_set]
-	# cache.cache(k, data)
 	return data
 
 def cart_len(cart_id):
@@ -107,12 +103,14 @@ def cart_len(cart_id):
 
 def cart_patch(cart_id, food_id, count):
 	k = "dd.cart%s" % cart_id
-	# cache.cache(k, None)
-	redis_store = get_redis_store()
-	redis_store.sadd(k, food_id)
 	k2 = "dd.cart%s.count%d" % (cart_id, food_id)
-	if redis_store.incrby(k2, count) < 0:
-		redis_store.set(k2, 0)
+	redis_store = get_redis_store()
+	with redis_store.pipeline() as p:
+		p.sadd(k, food_id)
+		p.incrby(k2, count)
+		p.execute()
+	# redis_store.sadd(k, food_id)
+	# redis_store.incrby(k2, count)
 	
 # order relative #
 
