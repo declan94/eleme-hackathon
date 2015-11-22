@@ -62,7 +62,7 @@ def authorize(request):
 # food relative #
 
 def food_key(food_id, field = "stock"):
-	return "dd.food%d.%s" % (food_id, field)
+	return "dd.food{}.{}".format(food_id, field)
 
 def food_field(food_id, field = "stock"):
 	redis_store = get_redis_store()
@@ -77,33 +77,33 @@ def food_exists(food_id):
 # cart relative #
 
 def cart_new(user_id):
-	cart_id = "%f%d" % (time(), user_id)
+	cart_id = "{}{}".format(time(), user_id)
 	return cart_id
 
 def cart_exists(cart_id):
 	return float(cart_id) >= 0
 
 def cart_belongs(cart_id, user_id):
-	key = "dd.user%d.cart%s" %(user_id, cart_id)
+	key = "dd.user{}.cart{}".format(user_id, cart_id)
 	redis_store = get_redis_store()
 	return  redis_store.get(key) == '1'
 
 def cart_data(cart_id):
-	k = "dd.cart%s" % cart_id
+	k = "dd.cart{}".format(cart_id)
 	data = []
 	redis_store = get_redis_store()
 	fid_set = redis_store.smembers(k)
-	data = [{'food_id': int(food_id), 'count': int(redis_store.get("dd.cart%s.count%s" % (cart_id, food_id)))} 
+	data = [{'food_id': int(food_id), 'count': int(redis_store.get("dd.cart{}.count{}".format(cart_id, food_id)))} 
 		for food_id in fid_set]
 	return data
 
 def cart_len(cart_id):
 	redis_store = get_redis_store()
-	return redis_store.scard("dd.cart%s" % cart_id)
+	return redis_store.scard("dd.cart" + cart_id)
 
 def cart_patch(cart_id, food_id, count):
-	k = "dd.cart%s" % cart_id
-	k2 = "dd.cart%s.count%d" % (cart_id, food_id)
+	k = "dd.cart" + cart_id
+	k2 = "dd.cart{}.count{}".format(cart_id, food_id)
 	redis_store = get_redis_store()
 	with redis_store.pipeline() as p:
 		p.sadd(k, food_id)
@@ -115,7 +115,7 @@ def cart_patch(cart_id, food_id, count):
 # order relative #
 
 def user_order_id(user_id):
-	k = "dd.order%d" % user_id
+	k = "dd.order{}".format(user_id)
 	order_id = cache.get(k)
 	if order_id:
 		return order_id
@@ -123,7 +123,7 @@ def user_order_id(user_id):
 	return redis_store.get(k)
 
 def set_user_order_id(user_id, order_id):
-	k = "dd.order%d" % user_id
+	k = "dd.order{}".format(user_id)
 	cache.cache(k, order_id)
 	redis_store = get_redis_store()
 	redis_store.set(k, order_id)
@@ -307,7 +307,7 @@ def try_app(environ, start_response):
 				'/admin/orders': all_orders
 			}
 			r = funcs.get(path, login)(request)	
-	status = "%d %s" % (r['status_code'], r['status'])
+	status = "{} {}".format(r['status_code'], r['status'])
 	response_body = r.get('data', '')
 	response_headers = [('Content-Type', 'application/json'), 
 		('Content-Length', str(len(response_body)))]  
@@ -329,6 +329,6 @@ if __name__ == '__main__':
 	host = os.getenv("APP_HOST", "localhost")
 	port = int(os.getenv("APP_PORT", "8080"))
 	httpd = make_server(host, port, app)
-	print "Serving HTTP on %s:%d ..." % (host, port)
+	print "Serving HTTP on {}:{} ...".format(host, port)
 	# 开始监听HTTP请求:
 	httpd.serve_forever()
