@@ -18,10 +18,7 @@ def my_response(data, status_code = 200, status = "ok"):
 	r = {'status' : status,
 		'status_code' : status_code}
 	if data != None:
-		if isinstance(data, str):
-			r['data'] = data
-		else:
-			r['data'] = json.dumps(data)
+		r['data'] = data if isinstance(data, str) else json.dumps(data)
 	return r
 
 def bad_req_1():
@@ -88,31 +85,99 @@ def cart_belongs(cart_id, user_id):
 	redis_store = get_redis_store()
 	return  redis_store.get(key) == '1'
 
-def cart_data(cart_id):
+def cart_patch(cart_id, food_id, count):
 	k = "dd.cart{}".format(cart_id)
-	data = []
+	v = "{}_{}".format(food_id, count)
 	redis_store = get_redis_store()
-	fid_set = redis_store.smembers(k)
-	data = [{'food_id': int(food_id), 'count': int(redis_store.get("dd.cart{}.count{}".format(cart_id, food_id)))} 
-		for food_id in fid_set]
-	return data
+	redis_store.lpush(k, v)
 
 def cart_len(cart_id):
+	k = "dd.cart{}".format(cart_id)
 	redis_store = get_redis_store()
-	return redis_store.scard("dd.cart" + cart_id)
+	return redis_store.llen(k)
 
-def cart_patch(cart_id, food_id, count):
-	k = "dd.cart" + cart_id
-	k2 = "dd.cart{}.count{}".format(cart_id, food_id)
+def cart_data(cart_id):
+	k = "dd.cart{}".format(cart_id)
+	redis_store = get_redis_store()
+	l = redis_store.lrange(k, 0, -1)
+	data = {}
+	for item in l:
+		temp = item.split("_")
+		food_id = int(temp[0])
+		count = int(temp[1])
+		o_count = data[food_id] if food_id in data else 0
+		n_count = max(count+o_count, 0)
+		data[food_id] = n_count
+	return data
+
+# old
+# def cart_patch(cart_id, food_id, count):
+# 	k = "dd.cart" + cart_id
+# 	k2 = "dd.cart{}.count{}".format(cart_id, food_id)
+# 	redis_store = get_redis_store()
+# 	with redis_store.pipeline() as p:
+# 		p.sadd(k, food_id)
+# 		p.incrby(k2, count)
+# 		p.execute()
+# 
+# def cart_data(cart_id):
+# 	k = "dd.cart{}".format(cart_id)
+# 	data = []
+# 	redis_store = get_redis_store()
+# 	fid_set = redis_store.smembers(k)
+# 	data = [{'food_id': int(food_id), 'count': int(redis_store.get("dd.cart{}.count{}".format(cart_id, food_id)))} 
+# 		for food_id in fid_set]
+# 	return data
+
+# def cart_len(cart_id):
+# 	redis_store = get_redis_store()
+# 	return redis_store.scard("dd.cart" + cart_id)
+
+# order relative #
+
+def order_multi_foods(cart):
 	redis_store = get_redis_store()
 	with redis_store.pipeline() as p:
-		p.sadd(k, food_id)
-		p.incrby(k2, count)
-		p.execute()
-	# redis_store.sadd(k, food_id)
-	# redis_store.incrby(k2, count)
-	
-# order relative #
+		for food_id in cart:
+			p.incrby(food_key(food_id), -cart[food_id])
+		ret = p.execute()
+		if min(ret) < 0:
+			for food_id in cart:
+				p.incrby(food_key(food_id), cart[food_id])
+			p.execute()
+			return False
+	return True
+
+def order_single_food(cart):
+	redis_store = get_redis_store()
+	for food_id in cart:
+		if redis_store.incrby(food_key(food_id), -cart[food_id]) < 0:
+			redis_store.incrby(food_key(food_id), cart[food_id])
+			return False
+	return True
+
+# old
+# def order_muti_foods(cart):
+# 	for i in range(0, len(cart)):
+# 		food_id = cart[i]['food_id']
+# 		count = cart[i]['count']
+# 		k = food_key(food_id)
+# 		redis_store = get_redis_store()
+# 		if redis_store.incrby(k, -count) < 0:
+# 			for j in range(0, i+1):				
+# 				redis_store.incrby(food_key(cart[j]['food_id'], cart[j]['count']))
+# 			return False
+# 	return True
+
+# def order_single_food(food):
+# 	food_id = food['food_id']
+# 	count = food['count']
+# 	k = food_key(food_id)
+# 	redis_store = get_redis_store()
+# 	if redis_store.incrby(k, -count) < 0:
+# 		redis_store.incrby(k, count)
+# 		return False
+# 	return True
 
 def user_order_id(user_id):
 	k = "dd.order{}".format(user_id)
@@ -133,30 +198,22 @@ def user_orders(user_id):
 	if not order_id:
 		return []
 	cart = cart_data(order_id)
-	total = sum([cache.food_price(item['food_id']) * item['count'] for item in cart])
-	return [{"id": order_id, "items": cart, "total": total}]
+	total = 0
+	items = []
+	for food_id in cart:
+		count = cart[food_id]
+		total += cache.food_price(food_id) * count
+		items.append({'food_id': food_id, 'count': count})
+	return [{"id": order_id, "items": items, "total": total}]
 
-def order_muti_foods(cart):
-	for i in range(0, len(cart)):
-		food_id = cart[i]['food_id']
-		count = cart[i]['count']
-		k = food_key(food_id)
-		redis_store = get_redis_store()
-		if redis_store.incrby(k, -count) < 0:
-			for j in range(0, i+1):				
-				redis_store.incrby(food_key(cart[j]['food_id'], cart[j]['count']))
-			return False
-	return True
-
-def order_single_food(food):
-	food_id = food['food_id']
-	count = food['count']
-	k = food_key(food_id)
-	redis_store = get_redis_store()
-	if redis_store.incrby(k, -count) < 0:
-		redis_store.incrby(k, count)
-		return False
-	return True
+# old
+# def user_orders(user_id):
+# 	order_id = user_order_id(user_id)
+# 	if not order_id:
+# 		return []
+# 	cart = cart_data(order_id)
+# 	total = sum([cache.food_price(item['food_id']) * item['count'] for item in cart])
+# 	return [{"id": order_id, "items": cart, "total": total}]
 
 
 ############### view functions ###############
@@ -240,7 +297,7 @@ def make_orders(request):
 	
 	if cart_len(cart_id) == 1:
 		cart = cart_data(cart_id)
-		ret = order_single_food(cart[0])
+		ret = order_single_food(cart)
 	else:
 		return my_response({"id": cart_id})
 		# cart = cart_data(cart_id)
