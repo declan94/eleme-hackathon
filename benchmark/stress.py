@@ -402,6 +402,7 @@ def main():
 
     total_time = work(
         args.host, args.port, args.processes, args.threads, args.num)
+
     report(args.processes, args.threads, total_time, float(args.num))
 
 
