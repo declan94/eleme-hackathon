@@ -56,21 +56,17 @@ def do_login(username, password):
 	return (user_id, access_token)
 
 def authorize(request):
-	args = request['args']
-	temp = args.get('access_token', False)
-	if temp and len(temp) > 0:
-		access_token = temp[0]
-	else:
-		access_token = request.get('Access-Token')
-		if not access_token:
-			return unauthorized()
-	l = access_token.split("_")
-	if len(l) == 2:
+	try:
+		access_token = request.get('args').get('access_token', False) or request.get('Access-Token', False)
+		l = access_token.split("_")
 		user_id = int(l[0])
 		check = int(l[1])
 		if user_id * 2 + 1 == check:
 			return user_id
-	return None
+		else:
+			return None
+	except:
+		return None
 
 # food relative #
 
