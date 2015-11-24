@@ -57,7 +57,7 @@ def do_login(username, password):
 
 def authorize(request):
 	try:
-		access_token = request.get('args').get('access_token', False) or request.get('Access-Token', False)
+		access_token = request.get('Access-Token', False) or request.get('args').get('access_token')[0] 
 		l = access_token.split("_")
 		user_id = int(l[0])
 		check = int(l[1])
