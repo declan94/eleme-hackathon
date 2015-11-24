@@ -20,8 +20,7 @@ redis_store = get_redis_store()
 def my_response(data, status_code = 200, status = "ok"):
 	r = {'status' : status,
 		'status_code' : status_code}
-	if data != None:
-		r['data'] = data if isinstance(data, str) else json.dumps(data)
+	r['data'] = data if isinstance(data, str) else json.dumps(data)
 	return r
 
 def bad_req_1():
@@ -279,7 +278,7 @@ def patch_carts(request, cart_id):
 		return my_response({"code": "FOOD_OUT_OF_LIMIT", "message": "篮子中食物数量超过了三个"}, 403, "Forbidden");
 	if not user_order_id(user_id):
 		cart_patch(cart_id, food_id, count)
-	return my_response(None, 204, "No content")
+	return my_response("", 204, "No content")
 
 # @app.route('/orders', methods=["POST"])
 def make_orders(request):
