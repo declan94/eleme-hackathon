@@ -85,6 +85,7 @@ def test_token_not_too_simple():
         passwords.append(password)
         tokens.append(token)
 
+
     # username & password should never be contained in token
     # it may occasionally occur in token since it's random string, so
     # test 5 random user to avoid mistake
