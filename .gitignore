@@ -3,3 +3,6 @@ app.log
 tests/.cache/
 *.pyc
 *~
+go/bin/
+go/pkg/
+*main
