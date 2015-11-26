@@ -2,4 +2,5 @@ language: go
 script:
   - go get github.com/garyburd/redigo/redis
   - go get github.com/go-sql-driver/mysql
-  - go run go/main.go
+  - GOPATH="$GOPATH:`pwd`/go" GOBIN="`pwd`/go/bin" go install go/src/main.go
+  - ./go/bin/main

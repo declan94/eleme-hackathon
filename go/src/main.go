@@ -1,5 +1,3 @@
-// Go hello-world implementation for eleme/hackathon.
-
 package main
 
 import (
@@ -11,6 +9,7 @@ import (
 	"strconv"
 	"math/rand"
 	"time"
+	"runtime"
 	"github.com/garyburd/redigo/redis"
 
 	"cache"
@@ -76,6 +75,7 @@ func main() {
 	for _, f := range foods {
 		rc.Do("SET", FoodStockKey(f.Id), f.Stock)
 	}
+	runtime.GOMAXPROCS(2)
 	RunServer()
 }
 
@@ -419,10 +419,7 @@ func CartData(rc redis.Conn, cart_id string) * map[int]int {
 		temp := strings.Split(item, "_")
 		food_id, _ := strconv.Atoi(temp[0])
 		count, _ := strconv.Atoi(temp[1])
-		o_count, ok := data[food_id]
-		if !ok {
-			o_count = 0
-		}
+		o_count := data[food_id]
 		n_count := o_count + count
 		if n_count < 0 {
 			n_count = 0
@@ -457,9 +454,7 @@ func UserOrder(rc redis.Conn, user_id int) * ResponseOrder {
 	if order_id == "" {
 		return nil
 	}
-	order := ResponseOrder{}
-	order.Id = order_id
-	order.Total = 0
+	order := ResponseOrder{Id: order_id, Total: 0}
 	cart := CartData(rc, order_id)
 	for food_id, count := range *cart {
 		order.Total = order.Total + cache.FoodPrice(food_id) * count
@@ -477,7 +472,6 @@ func OrderCart(rc redis.Conn, cart_id string) bool {
 		if err != nil {
 			panic(err)
 		}
-		// fmt.Printf("remain count:%d\n", c)
 		if c < 0 {
 			suc = false
 		}

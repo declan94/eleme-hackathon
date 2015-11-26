@@ -31,7 +31,7 @@ var (
 	user_cache      = make(map[string]int)   	// map[{user.Username}.{user.Password}]user.Id
 	food_cache      = make(map[int]int) 		// map[{food.Id}]price
 	food_json		= make([]byte, 0)	
-	uids			= make([]int, 0)
+	uids			= make([]int, 0, 10000)
 )
 
 //----------------------------------
@@ -106,7 +106,7 @@ func LoadUsers(db *sql.DB) {
 // Load foods from mysql
 func LoadFoods(db *sql.DB) []Food {
 	var food Food
-	foods := make([]Food, 0)
+	foods := make([]Food, 0, 100)
 	rows, err := db.Query("SELECT `id`, `stock`, `price` from food")
 	if err != nil {
 		panic(err)
