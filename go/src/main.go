@@ -11,7 +11,7 @@ import (
 	"time"
 	"runtime"
 	"github.com/garyburd/redigo/redis"
-	"cache"
+	"mycache"
 )
 
 //----------------------------------
@@ -68,7 +68,7 @@ var (
 
 func main() {
 	InitRedis()
-	foods := cache.LoadData()
+	foods := mycache.LoadData()
 	rc := redis_pool.Get()
 	defer rc.Close()
 	for _, f := range foods {
@@ -151,7 +151,7 @@ func Foods(w http.ResponseWriter, r * http.Request) {
 		ResponseUnauthorized(&w)
 		return
 	}
-	food_json := cache.FoodJson()
+	food_json := mycache.FoodJson()
 	Response(&w, food_json, http.StatusOK)
 }
 
@@ -282,7 +282,7 @@ func AllOrders(w http.ResponseWriter, r * http.Request) {
 	rc := redis_pool.Get()
 	defer rc.Close()
 	orders := make([]ResponseAdminOrder, 0)
-	for _, uid := range cache.UserIds() {
+	for _, uid := range mycache.UserIds() {
 		o := UserOrder(rc, uid)
 		if o != nil {
 			order := ResponseAdminOrder{uid, (*o).Id, (*o).Items, (*o).Total}
@@ -358,7 +358,7 @@ func Authorize(r * http.Request) int {
 }
 
 func DoLogin(data * RequestLogin) (int, string) {
-	user_id := cache.CheckUser(data.Username, data.Password)
+	user_id := mycache.CheckUser(data.Username, data.Password)
 	if user_id == 0 {
 		return 0, ""
 	}
@@ -456,7 +456,7 @@ func UserOrder(rc redis.Conn, user_id int) * ResponseOrder {
 	order := ResponseOrder{Id: order_id, Total: 0}
 	cart := CartData(rc, order_id)
 	for food_id, count := range *cart {
-		order.Total = order.Total + cache.FoodPrice(food_id) * count
+		order.Total = order.Total + mycache.FoodPrice(food_id) * count
 		item := OrderItem{food_id, count}
 		order.Items = append(order.Items, item)
 	}

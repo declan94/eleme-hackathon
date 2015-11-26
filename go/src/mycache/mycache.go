@@ -1,5 +1,4 @@
-package cache
-// package main
+package mycache
 
 import (
 	"os"
@@ -149,8 +148,3 @@ func FoodPrice(food_id int) int {
 	}
 }
 
-// func main() {
-// 	LoadData()	
-// 	fmt.Printf("Food 1 Price: %d \n", FoodPrice(1))
-// 	os.Stdout.Write(FoodJson())
-// }
