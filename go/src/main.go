@@ -11,7 +11,6 @@ import (
 	"time"
 	"runtime"
 	"github.com/garyburd/redigo/redis"
-
 	"cache"
 )
 
