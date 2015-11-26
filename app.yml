@@ -2,4 +2,4 @@ language: go
 script:
   - go get github.com/garyburd/redigo/redis
   - go get github.com/go-sql-driver/mysql
-  - GOPATH="$GOPATH:`pwd`/go" go run go/src/main.go
+  - GOPATH="`pwd`/go:$GOPATH" go run go/src/main.go
