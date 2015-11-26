@@ -75,7 +75,7 @@ func main() {
 	for _, f := range foods {
 		rc.Do("SET", FoodStockKey(f.Id), f.Stock)
 	}
-	runtime.GOMAXPROCS(2)
+	runtime.GOMAXPROCS(runtime.NumCPU())
 	RunServer()
 }
 
