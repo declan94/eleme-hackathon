@@ -396,18 +396,22 @@ func CartBelongs(cart_id string, user_id int) bool {
 func CartPatch(rc redis.Conn, cart_id string, data * RequestPatchCart) {
 	k := fmt.Sprintf("dd.cart%s", cart_id)
 	v := fmt.Sprintf("%d_%d", data.FoodId, data.Count)
-	k2 := fmt.Sprintf("dd.cart%s.count", cart_id)
 	rc.Do("RPUSH", k, v)
-	rc.Do("INCRBY", k2, data.Count)
 }
 
 func CartCount(rc redis.Conn, cart_id string) int {
-	k2 := fmt.Sprintf("dd.cart%s.count", cart_id)
-	count, err := redis.Int(rc.Do("GET", k2))
+	k := fmt.Sprintf("dd.cart%s", cart_id)
+	l, err := redis.Strings(rc.Do("LRANGE", k, 0, -1))
 	if err != nil {
 		return 0
 	}
-	return count
+	total := 0
+	for _, item := range l {
+		temp := strings.Split(item, "_")
+		count, _ := strconv.Atoi(temp[1])
+		total = total + count
+	}
+	return total
 }
 
 func CartData(rc redis.Conn, cart_id string) * map[int]int {
