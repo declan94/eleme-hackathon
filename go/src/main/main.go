@@ -88,7 +88,6 @@ func InitRedis() {
 		redis_port = "6379"
 	}
 	redis_addr := fmt.Sprintf("%s:%s", redis_host, redis_port)
-	// 建立连接池
 	redis_pool = &redis.Pool{
 		MaxIdle: 1,
 		MaxActive: 10,
@@ -251,7 +250,7 @@ func GetOrders(w http.ResponseWriter, r * http.Request, user_id int) {
 	rc := redis_pool.Get()
 	defer rc.Close()
 	order := UserOrder(rc, user_id)
-	orders := make([]ResponseOrder, 0)
+	orders := make([]ResponseOrder, 0, 1)
 	if order != nil {
 		orders = append(orders, (*order))
 	}
@@ -470,17 +469,14 @@ func OrderCart(rc redis.Conn, cart_id string) bool {
 	cart := CartData(rc, cart_id)
 	suc := true
 	for food_id, count := range * cart {
-		c, err := redis.Int(rc.Do("DECRBY", FoodStockKey(food_id), count))
-		if err != nil {
-			panic(err)
-		}
+		c, _ := redis.Int(rc.Do("DECRBY", FoodStockKey(food_id), count))
 		if c < 0 {
 			suc = false
 		}
 	}
 	if !suc {
 		for food_id, count := range * cart {
-			redis.Int(rc.Do("INCRBY", FoodStockKey(food_id), count))
+			rc.Do("INCRBY", FoodStockKey(food_id), count)
 		}
 	}	
 	return suc
