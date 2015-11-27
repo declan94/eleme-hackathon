@@ -63,17 +63,17 @@ type ResponseAdminOrder struct {
 }
 
 var (
-	redis_pool  *redis.Pool
+	redis_pool *redis.Pool
 )
 
 func main() {
 	InitRedis()
 	foods := mycache.LoadData()
 	rc := redis_pool.Get()
-	defer rc.Close()
 	for _, f := range foods {
 		rc.Do("SET", FoodStockKey(f.Id), f.Stock)
 	}
+	rc.Close()
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	RunServer()
 }
@@ -102,8 +102,8 @@ func InitRedis() {
 		},
 	}
 	rc := redis_pool.Get()
-	defer rc.Close()
 	rc.Do("FLUSHDB")
+	rc.Close()
 }
 
 func RunServer() {
@@ -115,13 +115,13 @@ func RunServer() {
 	if port == "" {
 		port = "8080"
 	}
-	addr := fmt.Sprintf("%s:%s", host, port)
 	http.HandleFunc("/login", Login)
 	http.HandleFunc("/foods", Foods)
 	http.HandleFunc("/carts", NewCart)
 	http.HandleFunc("/carts/", PatchCart)
 	http.HandleFunc("/orders", Orders)
 	http.HandleFunc("/admin/orders", AllOrders)
+	addr := fmt.Sprintf("%s:%s", host, port)
 	fmt.Printf("Listen And Serve On: %s \n", addr)
 	http.ListenAndServe(addr, nil)
 }
@@ -322,6 +322,8 @@ func ResponseUnauthorized(w * http.ResponseWriter) {
 
 /* support functions */
 
+// Parse data
+
 func DecodeData(r * http.Request, bind interface{}) int {
 	defer r.Body.Close()
 	if r.ContentLength == 0 {
@@ -333,6 +335,8 @@ func DecodeData(r * http.Request, bind interface{}) int {
 	}
 	return 0
 }
+
+//Authorize relative
 
 func Authorize(r * http.Request) int {
 	q := r.URL.Query()
@@ -383,9 +387,7 @@ func CartExists(cart_id string) bool {
 
 func CartBelongs(cart_id string, user_id int) bool {
 	l := strings.Split(cart_id, "_")
-	if len(l) != 2 {
-		return false
-	}
+	// CartBelongs is called after CartExists checked, so do not need to check len(l)
 	uid, err := strconv.Atoi(l[0])
 	if err != nil || uid != user_id {
 		return false
@@ -440,10 +442,7 @@ func FoodStockKey(food_id int) string {
 
 func UserOrderId(rc redis.Conn, user_id int) string {
 	k := fmt.Sprintf("dd.order%d", user_id)
-	order_id, err := redis.String(rc.Do("GET", k))
-	if err != nil {
-		return ""
-	}
+	order_id, _ := redis.String(rc.Do("GET", k))
 	return order_id
 }
 
