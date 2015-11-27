@@ -141,11 +141,7 @@ func FoodJson() []byte {
 }
 
 func FoodPrice(food_id int) int {
-	if v, ok := food_cache[food_id]; ok {
-		return v
-	} else {
-		return 0
-	}
+	return food_cache[food_id]
 }
 
 
