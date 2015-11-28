@@ -162,8 +162,7 @@ func NewCart(w http.ResponseWriter, r * http.Request) {
 		ResponseUnauthorized(&w)
 		return
 	}
-	cart_id := CartCreate(user_id)
-	res_str := fmt.Sprintf("{\"cart_id\":\"%s\"}", cart_id)
+	res_str := fmt.Sprintf("{\"cart_id\":\"%d_%d\"}", user_id, rand.Intn(2147483648))
 	io.WriteString(w, res_str)
 }
 
@@ -474,16 +473,23 @@ func UserOrder(rc redis.Conn, user_id int) * ResponseOrder {
 func OrderCart(rc redis.Conn, cart_id string) bool {
 	cart := CartData(rc, cart_id)
 	suc := true
+	n := 0
 	for food_id, count := range * cart {
-		c, _ := redis.Int(rc.Do("DECRBY", FoodStockKey(food_id), count))
+		rc.Send("DECRBY", FoodStockKey(food_id), count)
+		n++
+	}
+	rc.Flush()
+	for i:=0; i<n; i++ {
+		c, _ := redis.Int(rc.Receive())
 		if c < 0 {
 			suc = false
 		}
 	}
 	if !suc {
 		for food_id, count := range * cart {
-			rc.Do("INCRBY", FoodStockKey(food_id), count)
+			rc.Send("INCRBY", FoodStockKey(food_id), count)
 		}
+		rc.Flush()
 	}	
 	return suc
 }
