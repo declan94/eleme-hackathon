@@ -2,6 +2,7 @@ package main
 
 import (
 	"os"
+	"io"
 	"fmt"
 	"net/http"
 	"encoding/json"
@@ -89,9 +90,9 @@ func InitRedis() {
 	}
 	redis_addr := fmt.Sprintf("%s:%s", redis_host, redis_port)
 	redis_pool = &redis.Pool{
-		MaxIdle: 1,
-		MaxActive: 20,
-		IdleTimeout: 180 * time.Second,
+		MaxIdle: 0,
+		MaxActive: 40,
+		IdleTimeout: 10 * time.Second,
 		Dial: func() (redis.Conn, error) {
 			c, err := redis.Dial("tcp", redis_addr)
 			if err != nil {
@@ -135,8 +136,8 @@ func Login(w http.ResponseWriter, r * http.Request) {
 	}
 	user_id, token := DoLogin(data)
 	if user_id > 0 {
-		res_data := &ResponseLogin{user_id, data.Username, token}
-		ResponseJson(&w, res_data, http.StatusOK)
+		res_str := fmt.Sprintf("{\"user_id\":%d,\"username\":\"%s\",\"access_token\":\"%s\"}", user_id, data.Username, token)
+		io.WriteString(w, res_str)
 	} else {
 		res_data := &map[string]string {"code": "USER_AUTH_FAIL", "message": "用户名或密码错误"}
 		ResponseJson(&w, res_data, http.StatusForbidden)
@@ -151,7 +152,7 @@ func Foods(w http.ResponseWriter, r * http.Request) {
 		return
 	}
 	food_json := mycache.FoodJson()
-	Response(&w, food_json, http.StatusOK)
+	w.Write(food_json)
 }
 
 // /carts
@@ -162,8 +163,8 @@ func NewCart(w http.ResponseWriter, r * http.Request) {
 		return
 	}
 	cart_id := CartCreate(user_id)
-	res_data := &map[string]string {"cart_id": cart_id}
-	ResponseJson(&w, res_data, http.StatusOK)
+	res_str := fmt.Sprintf("{\"cart_id\":\"%s\"}", cart_id)
+	io.WriteString(w, res_str)
 }
 
 // /carts/<cart_id>
@@ -242,8 +243,8 @@ func MakeOrder(w http.ResponseWriter, r * http.Request, user_id int) {
 		return	
 	}
 	SetUserOrderId(rc, user_id, data.CartId)
-	res_data := &map[string]string {"id": data.CartId}
-	ResponseJson(&w, res_data, http.StatusOK)
+	res_str := fmt.Sprintf("{\"id\":\"%s\"}", data.CartId)
+	io.WriteString(w, res_str)
 }
 
 func GetOrders(w http.ResponseWriter, r * http.Request, user_id int) {
@@ -297,6 +298,11 @@ func AllOrders(w http.ResponseWriter, r * http.Request) {
 func Response(w * http.ResponseWriter, data []byte, code int) {
 	(*w).WriteHeader(code)
 	(*w).Write(data)
+}
+
+func ResponseStr(w * http.ResponseWriter, data string, code int) {
+	(*w).WriteHeader(code)
+	io.WriteString((*w), data)
 }
 
 func ResponseJson(w * http.ResponseWriter, data interface{}, code int) {
