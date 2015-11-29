@@ -72,8 +72,9 @@ func main() {
 	foods := mycache.LoadData()
 	rc := redis_pool.Get()
 	for _, f := range foods {
-		rc.Do("SET", FoodStockKey(f.Id), f.Stock)
+		rc.Send("SET", FoodStockKey(f.Id), f.Stock)
 	}
+	rc.Flush()
 	rc.Close()
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	RunServer()
