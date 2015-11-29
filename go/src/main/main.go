@@ -91,7 +91,7 @@ func InitRedis() {
 	redis_addr := fmt.Sprintf("%s:%s", redis_host, redis_port)
 	redis_pool = &redis.Pool{
 		MaxIdle: 0,
-		MaxActive: 40,
+		MaxActive: 120,
 		IdleTimeout: 10 * time.Second,
 		Dial: func() (redis.Conn, error) {
 			c, err := redis.Dial("tcp", redis_addr)
