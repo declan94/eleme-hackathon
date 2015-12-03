@@ -20,7 +20,7 @@
 
 * 购物车数据管理：采用redis列表实现，每个购物车对应一个list，list中每一项为{food_id}_{count}。
 
-* 库存一致性维护：对于购物车中的每一个食物，用redis的DECREASEBY指令递减库存，如果返回的余量<0，说明超售，手动通过INCREASEBY指令回滚。多个食物使用pipeline减少tcp传输延迟。
+* 库存一致性维护：对于购物车中的每一个食物，用redis的DECREASEBY指令递减库存，如果返回的余量<0，说明超售，手动通过INCREASEBY指令回滚。多个食物使用pipeline减少tcp传输时间。
 
 * 下单：直接将购物车card_id作为order_id，购物车数据即为订单数据，最大程度减少数据库操作。但注意对于已下单的购物车，忽略对其中商品的操作。
 
