@@ -1,3 +1,29 @@
+# 初赛参赛代码
+
+## 目录说明
+
+* flask - 使用python语言，flask框架实现。
+
+* py    - 使用python，直接采用uwsgi接口实现。
+
+* go    - 使用golang实现。
+
+## 策略说明
+
+* 初始化时将用户和食品数据缓存到内存和redis，全程不使用mysql。
+
+* 登陆：使用内存中缓存的用户数据验证，token采用{uid}_{check}，其中check采用简单的实现：check = uid * 2 + 1
+
+* 获取食物列表：返回内存中缓存的数据，考虑应用场景是短时极高并发的情况，此接口只需要正确的食物列表，不可能也不需要返回准确的stock。
+
+* 购物车：新生成的购物车的id采用{uid}_{random}其中random是随机数。这样做的目的是为了快速验证购物车的归属。
+
+* 购物车数据管理：采用redis列表实现，每个购物车对应一个list，list中每一项为{food_id}_{count}。
+
+* 库存一致性维护：对于购物车中的每一个食物，用redis的DECREASEBY指令递减库存，如果返回的余量<0，说明超售，手动通过INCREASEBY指令回滚。多个食物使用pipeline减少tcp传输延迟。
+
+
+
 # Eleme Hackathon Intro
 
 饿了么 Hackathon 2015 初赛信息介绍。
