@@ -4,7 +4,7 @@
 
 * flask - 使用python语言，flask框架实现。
 
-* py    - 使用python，直接采用uwsgi接口实现。
+* py    - 使用python，直接采用wsgi接口实现。
 
 * go    - 使用golang实现。
 
@@ -22,9 +22,10 @@
 
 * 库存一致性维护：对于购物车中的每一个食物，用redis的DECREASEBY指令递减库存，如果返回的余量<0，说明超售，手动通过INCREASEBY指令回滚。多个食物使用pipeline减少tcp传输延迟。
 
+* 下单：直接将购物车card_id作为order_id，购物车数据即为订单数据，最大程度减少数据库操作。但注意对于已下单的购物车，忽略对其中商品的操作。
 
 
-# Eleme Hackathon Intro
+# eleme官方说明 - Eleme Hackathon Intro
 
 饿了么 Hackathon 2015 初赛信息介绍。
 
